@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elite Admin Command Center - Borderless NeoBank</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .elite-dashboard {
+      background: linear-gradient(135deg, #0D1B2A 0%, #1a1f2e 100%);
+      min-height: 100vh;
+    }
+    
+    .elite-header {
+      background: rgba(0, 0, 0, 0.8);
+      border-bottom: 1px solid rgba(0, 212, 170, 0.3);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .elite-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 170, 0.1) 50%, transparent 100%);
+      animation: scanLine 3s linear infinite;
+    }
+    
+    @keyframes scanLine {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(200%); }
+    }
+    
+    .elite-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--success));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    
+    .elite-subtitle {
+      color: var(--accent);
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+    
+    .elite-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      padding: 2rem;
+    }
+    
+    .elite-card {
+      background: rgba(13, 27, 42, 0.6);
+      border: 1px solid rgba(0, 212, 170, 0.2);
+      border-radius: 12px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .elite-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 30px rgba(0, 212, 170, 0.2);
+    }
+    
+    .elite-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent) 50%, transparent 100%);
+      animation: cardScan 2s linear infinite;
+    }
+    
+    @keyframes cardScan {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    .elite-card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .elite-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent), var(--info));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    
+    .elite-card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    
+    .elite-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .elite-metric {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+    }
+    
+    .elite-metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    
+    .elite-metric-label {
+      font-size: 0.875rem;
+      color: var(--gray);
+    }
+    
+    .elite-status {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .status-active {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+    }
+    
+    .status-warning {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--warning);
+    }
+    
+    .status-critical {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--coral);
+    }
+    
+    .ai-brain {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle, var(--accent), transparent);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.6; transform: line-height: 1.1); }
+    }
+    
+    .quantum-indicator {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(45deg, var(--purple), var(--info));
+      border-radius: 50%;
+      animation: rotate 4s linear infinite;
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Elite Navigation -->
+  <nav class="navbar" style="background: rgba(13, 27, 42, 0.95); border-bottom: 1px solid rgba(0, 212, 170, 0.3);">
+    <div class="navbar-container">
+      <a href="../index.html" class="navbar-brand">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="#00D4AA"/>
+          <path d="M12 20L20 12L28 20L20 28L12 20Z" fill="#0D1B2A"/>
+          <path d="M20 16L24 20L20 24L16 20L20 16Z" fill="#0D1B2A"/>
+        </svg>
+        Borderless <span style="color: var(--accent); font-size: 0.75rem; font-weight: 700; background: rgba(0, 212, 170, 0.2); padding: 0.25rem 0.5rem; border-radius: 4px;">ELITE</span>
+      </a>
+      
+      <div class="navbar-menu active" style="display: flex; align-items: center; gap: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <div class="quantum-indicator"></div>
+          <span style="color: var(--accent); font-size: 0.75rem; font-weight: 600;">QUANTUM MODE</span>
+        </div>
+        <ul class="navbar-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="admin.html">Admin</a></li>
+          <li><a href="admin-elite.html" class="active">Elite</a></li>
+          <li><a href="how-to-use.html">Guide</a></li>
+        </ul>
+        <div class="navbar-actions">
+          <button class="btn btn-icon btn-ghost" style="position: relative;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span style="position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background: var(--coral); border-radius: 50%; animation: pulse 1s ease-in-out infinite;"></span>
+          </button>
+          <a href="../index.html" class="btn btn-ghost">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Elite Dashboard -->
+  <div class="elite-dashboard">
+    <!-- Header -->
+    <div class="elite-header">
+      <div class="ai-brain"></div>
+      <div>
+        <h1 class="elite-title">THE ELITE ADMIN UPGRADE</h1>
+        <p class="elite-subtitle">GLOBAL FINANCIAL NETWORK GOVERNANCE • AUTONOMOUS OPERATIONS • QUANTUM-READY SECURITY</p>
+      </div>
+    </div>
+
+    <!-- Elite Grid -->
+    <div class="elite-grid">
+      <!-- Central Bank Treasury -->
+      <div class="elite-card">
+        <div class="elite-card-header">
+          <div class="elite-icon">🏦</div>
+          <div>
+            <h2 class="elite-card-title">CENTRAL BANK TREASURY</h2>
+            <span class="elite-status status-active">AUTOMATED</span>
+          </div>
+        </div>
+        <div class="elite-metrics">
+          <div class="elite-metric">
+            <div class="elite-metric-value">$2.4B</div>
+            <div class="elite-metric-label">Global Liquidity Pool</div>
+          </div>
+          <div class="elite-metric">
+            <div class="elite-metric-value">98.7%</div>
+            <div class="elite-metric-label">Weekend Coverage</div>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0, 0, 0, 0.4); border-radius: 8px;">
+          <h4 style="color: var(--accent); margin-bottom: 1rem;">AI Liquidity Forecasting</h4>
+          <div style="display: grid; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>USD Reserve Required:</span>
+              <span style="color: var(--success);">$850M</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>NGN Reserve Required:</span>
+              <span style="color: var(--warning);">₦1.2B</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>GBP Reserve Required:</span>
+              <span style="color: var(--success);">£450M</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Cross-Border Efficiency:</span>
+              <span style="color: var(--info);">99.2%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Governance -->
+      <div class="elite-card">
+        <div class="elite-card-header">
+          <div class="elite-icon">🤖</div>
+          <div>
+            <h2 class="elite-card-title">AI GOVERNANCE</h2>
+            <span class="elite-status status-active">EU AI ACT READY</span>
+          </div>
+        </div>
+        <div class="elite-metrics">
+          <div class="elite-metric">
+            <div class="elite-metric-value">CFO AI v3.2</div>
+            <div class="elite-metric-label">Model Version</div>
+          </div>
+          <div class="elite-metric">
+            <div class="elite-metric-value">99.94%</div>
+            <div class="elite-metric-label">Ethical Score</div>
+          </div>
+          <div class="elite-metric">
+            <div class="elite-metric-value">0.02%</div>
+            <div class="elite-metric-label">Bias Detection</div>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0, 0, 0, 0.4); border-radius: 8px;">
+          <h4 style="color: var(--accent); margin-bottom: 1rem;">Model Explainability</h4>
+          <div style="display: grid; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Last Decision:</span>
+              <span style="color: var(--info);">Approved ₦10M Transfer</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Reasoning:</span>
+              <span style="color: var(--success);">Valid Business Risk</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Confidence:</span>
+              <span style="color: var(--success);">97.3%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Autonomous Security -->
+      <div class="elite-card">
+        <div class="elite-card-header">
+          <div class="elite-icon">🔒</div>
+          <div>
+            <h2 class="elite-card-title">AUTONOMOUS SECURITY</h2>
+            <span class="elite-status status-active">GOD MODE</span>
+          </div>
+        </div>
+        <div class="elite-metrics">
+          <div class="elite-metric">
+            <div class="elite-metric-value">247</div>
+            <div class="elite-metric-label">Threats Neutralized/Hour</div>
+          </div>
+          <div class="elite-metric">
+            <div class="elite-metric-value">99.99%</div>
+            <div class="elite-metric-label">System Uptime</div>
+          </div>
+          <div class="elite-metric">
+            <div class="elite-metric-value">0.001s</div>
+            <div class="elite-metric-label">Response Time</div>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0, 0, 0, 0.4); border-radius: 8px;">
+          <h4 style="color: var(--accent); margin-bottom: 1rem;">Quantum Security Matrix</h4>
+          <div style="display: grid; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Encryption:</span>
+              <span style="color: var(--success);">Quantum-Resistant</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Zero-Knowledge Proofs:</span>
+              <span style="color: var(--success);">Active</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Threat Prediction:</span>
+              <span style="color: var(--info);">98.7% Accuracy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hyper-Scale Management -->
+      <div class="elite-card">
+        <div class="elite-card-header">
+          <div class="elite-icon">🌐</div>
+          <div>
+            <h2 class="elite-card-title">HYPER-SCALE MANAGEMENT</h2>
+            <span class="elite-status status-warning">SCALING</span>
+          </div>
+        </div>
+        <div class="elite-metrics">
+          <div class="elite-metric">
+            <div class="elite-metric-value">50.2M</div>
+            <div class="elite-metric-label">Active Users</div>
+          </div>
+          <div class="elite-metric">
+            <div class="elite-metric-value">1,247</div>
+            <div class="elite-metric-label">Corporate Entities</div>
+          </div>
+          <div class="elite-metric">
+            <div class="elite-metric-value">156</div>
+            <div class="elite-metric-label">Countries</div>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0, 0, 0, 0.4); border-radius: 8px;">
+          <h4 style="color: var(--accent); margin-bottom: 1rem;">Visual Organization Trees</h4>
+          <div style="display: grid; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Parent Entity:</span>
+              <span style="color: var(--info);">Borderless Global Holdings</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Subsidiaries:</span>
+              <span style="color: var(--success);">5 Active</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Jurisdictions:</span>
+              <span style="color: var(--warning);">Delaware, Nigeria, Kenya, UK</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Global Compliance -->
+      <div class="elite-card">
+        <div class="elite-card-header">
+          <div class="elite-icon">🌍</div>
+          <div>
+            <h2 class="elite-card-title">GLOBAL COMPLIANCE</h2>
+            <span class="elite-status status-active">AUTO-FILING</span>
+          </div>
+        </div>
+        <div class="elite-metrics">
+          <div class="elite-metric">
+            <div class="elite-metric-value">47</div>
+            <div class="elite-metric-label">Regulatory Bodies</div>
+          </div>
+          <div class="elite-metric">
+            <div class="elite-metric-value">99.8%</div>
+            <div class="elite-metric-label">Compliance Score</div>
+          </div>
+          <div class="elite-metric">
+            <div class="elite-metric-value">12</div>
+            <div class="elite-metric-label">Pending Filings</div>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0, 0, 0, 0.4); border-radius: 8px;">
+          <h4 style="color: var(--accent); margin-bottom: 1rem;">ESG Metrics</h4>
+          <div style="display: grid; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Carbon Footprint:</span>
+              <span style="color: var(--success);">-12,450 tons CO₂</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Social Score:</span>
+              <span style="color: var(--info);">87.3/100</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Governance:</span>
+              <span style="color: var(--success);">94.1/100</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enterprise Network -->
+      <div class="elite-card">
+        <div class="elite-card-header">
+          <div class="elite-icon">🔗</div>
+          <div>
+            <h2 class="elite-card-title">ENTERPRISE ECOSYSTEM</h2>
+            <span class="elite-status status-active">MARKETPLACE</span>
+          </div>
+        </div>
+        <div class="elite-metrics">
+          <div class="elite-metric">
+            <div class="elite-metric-value">1,847</div>
+            <div class="elite-metric-label">API Integrations</div>
+          </div>
+          <div class="elite-metric">
+            <div class="elite-metric-value">$847M</div>
+            <div class="elite-metric-label">Daily Volume</div>
+          </div>
+          <div class="elite-metric">
+            <div class="elite-metric-value">234</div>
+            <div class="elite-metric-label">Partners</div>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0, 0, 0, 0.4); border-radius: 8px;">
+          <h4 style="color: var(--accent); margin-bottom: 1rem;">Network Effects</h4>
+          <div style="display: grid; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Latency:</span>
+              <span style="color: var(--success);">12ms</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Throughput:</span>
+              <span style="color: var(--info);">1.2M TPS</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Network Value:</span>
+              <span style="color: var(--accent);">$24.7B</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Status Bar -->
+    <div style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13, 27, 42, 0.95); border-top: 1px solid rgba(0, 212, 170, 0.3); padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <div class="quantum-indicator"></div>
+        <span style="color: var(--accent); font-size: 0.875rem; font-weight: 600;">QUANTUM SECURITY ACTIVE</span>
+        <span class="elite-status status-active">SYSTEM OPTIMAL</span>
+      </div>
+      <div style="color: var(--gray); font-size: 0.75rem;">
+        <span>Network Status: </span>
+        <span style="color: var(--success);">Global Operations Normal</span>
+        <span> • </span>
+        <span>AI Performance: </span>
+        <span style="color: var(--success);">99.94% Ethical Score</span>
+        <span> • </span>
+        <span>Time: </span>
+        <span id="elite-time"></span>
+      </div>
+    </div>
+
+    <script>
+      // Update time
+      function updateTime() {
+        const now = new Date();
+        document.getElementById('elite-time').textContent = now.toLocaleTimeString();
+      }
+      updateTime();
+      setInterval(updateTime, 1000);
+      
+      // Add some elite interactions
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Elite Admin Dashboard initialized');
+        
+        // Add click handlers to elite cards
+        const eliteCards = document.querySelectorAll('.elite-card');
+        eliteCards.forEach(card => {
+          card.addEventListener('click', function() {
+            const title = this.querySelector('.elite-card-title').textContent;
+            alert(`Accessing ${title} - ELITE MODE ACTIVATED`);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookkeeping - Borderless NeoBank</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="../index.html" class="navbar-brand">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="#00D4AA"/>
+          <path d="M12 20L20 12L28 20L20 28L12 20Z" fill="#0D1B2A"/>
+          <path d="M20 16L24 20L20 24L16 20L20 16Z" fill="#0D1B2A"/>
+        </svg>
+        Borderless
+      </a>
+      
+      <div class="navbar-menu active" style="display: flex; align-items: center; gap: 1.5rem;">
+        <ul class="navbar-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="accounts.html">Accounts</a></li>
+          <li><a href="cards.html">Cards</a></li>
+          <li><a href="payments.html">Payments</a></li>
+          <li><a href="bookkeeping.html" class="active">Bookkeeping</a></li>
+          <li><a href="reports.html">Reports</a></li>
+          <li><a href="how-to-use.html">How to Use</a></li>
+        </ul>
+        <div class="navbar-actions">
+          <button class="btn btn-icon btn-ghost" style="position: relative;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span style="position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background: var(--coral); border-radius: 50%;"></span>
+          </button>
+          <a href="../index.html" class="btn btn-ghost">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Layout -->
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">JD</div>
+        <div class="sidebar-user-info">
+          <h4>John Doe</h4>
+          <span>Premium Plan</span>
+        </div>
+      </div>
+      
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="dashboard.html" class="sidebar-nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+            </svg>
+            Overview
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="accounts.html" class="sidebar-nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="9" x2="23" y2="9"></line>
+            </svg>
+            Accounts
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="cards.html" class="sidebar-nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <rect x="7" y="6" width="10" height="11"></rect>
+            </svg>
+            Cards
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="payments.html" class="sidebar-nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            Payments
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="bookkeeping.html" class="sidebar-nav-link active">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+            Bookkeeping
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="reports.html" class="sidebar-nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            Reports
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <div class="dashboard-header">
+        <div>
+          <h1 class="dashboard-title">AI Bookkeeping 📊</h1>
+          <p class="dashboard-date">Automated financial tracking and intelligent expense management</p>
+        </div>
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="12" y1="12" x2="12" y2="12"></line>
+            </svg>
+            Sync Accounts
+          </button>
+          <button class="btn btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 0 2 2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+            </svg>
+            Export Data
+          </button>
+        </div>
+      </div>
+
+      <!-- AI Insights -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">AI Financial Insights</h3>
+          <span style="font-size: 0.75rem; color: var(--success); background: rgba(16, 185, 129, 0.2); padding: 0.25rem 0.75rem; border-radius: 4px;">AI Active</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+          <div style="padding: 1.5rem; background: var(--primary); border-radius: 8px; border-left: 3px solid var(--accent);">
+            <div style="font-size: 0.75rem; color: var(--gray); margin-bottom: 0.5rem;">💡 Recommendation</div>
+            <div style="font-weight: 500; margin-bottom: 0.75rem;">Optimize cash flow</div>
+            <div style="font-size: 0.8125rem; color: var(--accent);">Move $50K from high-interest savings to investment account for 3.2% higher returns</div>
+          </div>
+          <div style="padding: 1.5rem; background: var(--primary); border-radius: 8px; border-left: 3px solid var(--warning);">
+            <div style="font-size: 0.75rem; color: var(--gray); margin-bottom: 0.5rem;">⚠️ Alert</div>
+            <div style="font-weight: 500; margin-bottom: 0.75rem;">Unusual spending detected</div>
+            <div style="font-size: 0.8125rem; color: var(--warning);">Marketing expenses up 45% this month - review vendor contracts</div>
+          </div>
+          <div style="padding: 1.5rem; background: var(--primary); border-radius: 8px; border-left: 3px solid var(--success);">
+            <div style="font-size: 0.75rem; color: var(--gray); margin-bottom: 0.5rem;">✅ Automation</div>
+            <div style="font-weight: 500; margin-bottom: 0.75rem;">Tax optimization opportunity</div>
+            <div style="font-size: 0.8125rem; color: var(--success);">$12,500 in potential tax savings identified for Q2 2026</div>
+          </div>
+          <div style="padding: 1.5rem; background: var(--primary); border-radius: 8px; border-left: 3px solid var(--info);">
+            <div style="font-size: 0.75rem; color: var(--gray); margin-bottom: 0.5rem;">📈 Trend</div>
+            <div style="font-weight: 500; margin-bottom: 0.75rem;">Revenue growth pattern</div>
+            <div style="font-size: 0.8125rem; color: var(--info);">Consistent 15% month-over-month growth for last 6 months</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expense Categories -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Expense Categories</h3>
+          <span style="font-size: 0.75rem; color: var(--info); background: rgba(59, 130, 246, 0.2); padding: 0.25rem 0.75rem; border-radius: 4px;">Auto-Categorized</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+          <div style="text-align: center; padding: 1.5rem; background: var(--primary); border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏢</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">Operations</div>
+            <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">$45,230</div>
+            <div style="font-size: 0.875rem; color: var(--gray);">45% of total</div>
+          </div>
+          <div style="text-align: center; padding: 1.5rem; background: var(--primary); border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">👥</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">Payroll</div>
+            <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">$82,500</div>
+            <div style="font-size: 0.875rem; color: var(--gray);">82% of total</div>
+          </div>
+          <div style="text-align: center; padding: 1.5rem; background: var(--primary); border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">💳</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">Cards & Processing</div>
+            <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">$28,340</div>
+            <div style="font-size: 0.875rem; color: var(--gray);">28% of total</div>
+          </div>
+          <div style="text-align: center; padding: 1.5rem; background: var(--primary); border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏪</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">Vendors</div>
+            <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">$12,180</div>
+            <div style="font-size: 0.875rem; color: var(--gray);">12% of total</div>
+          </div>
+          <div style="text-align: center; padding: 1.5rem; background: var(--primary); border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏠</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">Office & Utilities</div>
+            <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">$8,750</div>
+            <div style="font-size: 0.875rem; color: var(--gray);">9% of total</div>
+          </div>
+          <div style="text-align: center; padding: 1.5rem; background: var(--primary); border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📦</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">Marketing</div>
+            <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">$5,000</div>
+            <div style="font-size: 0.875rem; color: var(--gray);">5% of total</div>
+          </div>
+          <div style="text-align: center; padding: 1.5rem; background: var(--primary); border-radius: 8px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">Other</div>
+            <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">$8,000</div>
+            <div style="font-size: 0.875rem; color: var(--gray);">8% of total</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Automatically Categorized Transactions</h3>
+          <span style="font-size: 0.75rem; color: var(--success); background: rgba(16, 185, 129, 0.2); padding: 0.25rem 0.75rem; border-radius: 4px;">98% Accurate</span>
+        </div>
+        <div style="padding: 1.5rem;">
+          <ul class="transactions-list">
+            <li class="transaction-item">
+              <div class="transaction-info">
+                <div class="transaction-icon" style="background: rgba(46, 204, 113, 0.2);">🏢</div>
+                <div class="transaction-details">
+                  <h4>Office Rent Payment</h4>
+                  <span>Operations • Monthly Recurring</span>
+                </div>
+              </div>
+              <div class="transaction-amount">
+                <div class="transaction-amount-value negative">-$3,500.00</div>
+                <div class="transaction-amount-date">Today, 9:00 AM</div>
+              </div>
+            </li>
+            
+            <li class="transaction-item">
+              <div class="transaction-info">
+                <div class="transaction-icon" style="background: rgba(59, 130, 246, 0.2);">👥</div>
+                <div class="transaction-details">
+                  <h4>Payroll Processing</h4>
+                  <span>Payroll • Bi-weekly</span>
+                </div>
+              </div>
+              <div class="transaction-amount">
+                <div class="transaction-amount-value negative">-$41,250.00</div>
+                <div class="transaction-amount-date">Yesterday</div>
+              </div>
+            </li>
+            
+            <li class="transaction-item">
+              <div class="transaction-info">
+                <div class="transaction-icon" style="background: rgba(16, 185, 129, 0.2);">📦</div>
+                <div class="transaction-details">
+                  <h4>Software License Renewal</h4>
+                  <span>Office • Annual Subscription</span>
+                </div>
+              </div>
+              <div class="transaction-amount">
+                <div class="transaction-amount-value negative">-$299.00</div>
+                <div class="transaction-amount-date">Apr 15, 2026</div>
+              </div>
+            </li>
+            
+            <li class="transaction-item">
+              <div class="transaction-info">
+                <div class="transaction-icon" style="background: rgba(123, 104, 238, 0.2);">💳</div>
+                <div class="transaction-details">
+                  <h4>Client Payment Received</h4>
+                  <span>Revenue • Invoice #1234</span>
+                </div>
+              </div>
+              <div class="transaction-amount">
+                <div class="transaction-amount-value positive">+$15,000.00</div>
+                <div class="transaction-amount-date">Apr 14, 2026</div>
+              </div>
+            </li>
+            
+            <li class="transaction-item">
+              <div class="transaction-info">
+                <div class="transaction-icon" style="background: rgba(46, 204, 113, 0.2);">🏢</div>
+                <div class="transaction-details">
+                  <h4>Utility Bills</h4>
+                  <span>Office • Monthly Utilities</span>
+                </div>
+              </div>
+              <div class="transaction-amount">
+                <div class="transaction-amount-value negative">-$850.00</div>
+                <div class="transaction-amount-date">Apr 13, 2026</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Financial Summary -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Monthly Financial Summary</h3>
+          <span style="font-size: 0.75rem; color: var(--info); background: rgba(59, 130, 246, 0.2); padding: 0.25rem 0.75rem; border-radius: 4px;">AI Generated</span>
+        </div>
+        <div style="padding: 1.5rem;">
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--info);">Income Summary</h4>
+              <div style="background: var(--primary); padding: 1.5rem; border-radius: 8px;">
+                <div style="display: grid; gap: 1rem;">
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Revenue</span>
+                    <span style="font-weight: 700; color: var(--success);">+$125,000</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Investment Returns</span>
+                    <span style="font-weight: 700; color: var(--success);">+$2,500</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Other Income</span>
+                    <span style="font-weight: 700; color: var(--success);">+$1,200</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1rem; margin-top: 1rem;">
+                    <span style="font-weight: 600;">Total Income</span>
+                    <span style="font-weight: 700; color: var(--success);">+$128,700</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--info);">Expense Summary</h4>
+              <div style="background: var(--primary); padding: 1.5rem; border-radius: 8px;">
+                <div style="display: grid; gap: 1rem;">
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Operations</span>
+                    <span style="font-weight: 700; color: var(--coral);">-$45,230</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Payroll</span>
+                    <span style="font-weight: 700; color: var(--coral);">-$82,500</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Office & Utilities</span>
+                    <span style="font-weight: 700; color: var(--coral);">-$9,600</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Marketing</span>
+                    <span style="font-weight: 700; color: var(--coral);">-$5,000</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Other</span>
+                    <span style="font-weight: 700; color: var(--coral);">-$8,000</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1rem; margin-top: 1rem;">
+                    <span style="font-weight: 600;">Total Expenses</span>
+                    <span style="font-weight: 700; color: var(--coral);">-$150,330</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-top: 2rem; padding: 1.5rem; background: var(--primary); border-radius: 8px; border-left: 3px solid var(--accent);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">Net Income</div>
+              <div style="font-size: 2rem; font-weight: 700; color: var(--success);">-$21,630</div>
+            </div>
+            <div style="text-align: right;">
+              <button class="btn btn-primary">Generate Full Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

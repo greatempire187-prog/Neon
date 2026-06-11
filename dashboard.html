@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Borderless NeoBank</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="../index.html" class="navbar-brand">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="#00D4AA"/>
+          <path d="M12 20L20 12L28 20L20 28L12 20Z" fill="#0D1B2A"/>
+          <path d="M20 16L24 20L20 24L16 20L20 16Z" fill="#0D1B2A"/>
+        </svg>
+        Borderless
+      </a>
+      
+      <div class="navbar-menu active" style="display: flex; align-items: center; gap: 1.5rem;">
+        <ul class="navbar-links">
+          <li><a href="dashboard.html" class="active">Dashboard</a></li>
+          <li><a href="#accounts">Accounts</a></li>
+          <li><a href="#cards">Cards</a></li>
+          <li><a href="#payments">Payments</a></li>
+          <li><a href="#bookkeeping">Bookkeeping</a></li>
+          <li><a href="#reports">Reports</a></li>
+        </ul>
+        <div class="navbar-actions">
+          <button class="btn btn-icon btn-ghost" style="position: relative;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span style="position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background: var(--coral); border-radius: 50%;"></span>
+          </button>
+          <a href="../index.html" class="btn btn-ghost">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Layout -->
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">JD</div>
+        <div class="sidebar-user-info">
+          <h4>John Doe</h4>
+          <span>Premium Plan</span>
+        </div>
+      </div>
+      
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="dashboard.html" class="sidebar-nav-link active">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            Overview
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#accounts" class="sidebar-nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+            Accounts
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#cards" class="sidebar-nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <rect x="7" y="7" width="3" height="9"></rect>
+              <rect x="14" y="7" width="3" height="5"></rect>
+            </svg>
+            Virtual Cards
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#payments" class="sidebar-nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            Payments
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#invoices" class="sidebar-nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            Invoices
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#bookkeeping" class="sidebar-nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+            Bookkeeping
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#reports" class="sidebar-nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            Reports
+          </a>
+        </li>
+      </ul>
+      
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Automation</div>
+        <ul class="sidebar-nav">
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+              </svg>
+              Agentic Rules
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+              CFO Mode
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Settings</div>
+        <ul class="sidebar-nav">
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Profile
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              Security
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <div class="dashboard-header">
+        <div>
+          <h1 class="dashboard-title">Welcome back, John 👋</h1>
+          <p class="dashboard-date">Friday, April 17, 2026</p>
+        </div>
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Export
+          </button>
+          <button class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            New Payment
+          </button>
+        </div>
+      </div>
+
+      <!-- Balance Cards -->
+      <div class="balance-grid">
+        <div class="balance-card" onclick="handleBalanceCard(this)">
+          <div class="balance-card-header">
+            <div class="balance-card-icon" style="background: rgba(46, 204, 113, 0.2); color: var(--usd);">USD</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gray)" stroke-width="2">
+              <circle cx="12" cy="12" r="1"></circle>
+              <circle cx="19" cy="12" r="1"></circle>
+              <circle cx="5" cy="12" r="1"></circle>
+            </svg>
+          </div>
+          <div class="balance-card-label">US Dollar</div>
+          <div class="balance-card-value">$425,000.00</div>
+          <div class="balance-card-change positive">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+            +12.5% this month
+          </div>
+        </div>
+        
+        <div class="balance-card" onclick="handleBalanceCard(this)">
+          <div class="balance-card-header">
+            <div class="balance-card-icon" style="background: rgba(155, 89, 182, 0.2); color: var(--gbp);">GBP</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gray)" stroke-width="2">
+              <circle cx="12" cy="12" r="1"></circle>
+              <circle cx="19" cy="12" r="1"></circle>
+              <circle cx="5" cy="12" r="1"></circle>
+            </svg>
+          </div>
+          <div class="balance-card-label">British Pound</div>
+          <div class="balance-card-value">£125,000.00</div>
+          <div class="balance-card-change positive">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+            +5.2% this month
+          </div>
+        </div>
+        
+        <div class="balance-card" onclick="handleBalanceCard(this)">
+          <div class="balance-card-header">
+            <div class="balance-card-icon" style="background: rgba(52, 152, 219, 0.2); color: var(--eur);">EUR</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gray)" stroke-width="2">
+              <circle cx="12" cy="12" r="1"></circle>
+              <circle cx="19" cy="12" r="1"></circle>
+              <circle cx="5" cy="12" r="1"></circle>
+            </svg>
+          </div>
+          <div class="balance-card-label">Euro</div>
+          <div class="balance-card-value">€180,000.00</div>
+          <div class="balance-card-change negative">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
+              <polyline points="17 18 23 18 23 12"></polyline>
+            </svg>
+            -2.1% this month
+          </div>
+        </div>
+        
+        <div class="balance-card" onclick="handleBalanceCard(this)">
+          <div class="balance-card-header">
+            <div class="balance-card-icon" style="background: rgba(231, 76, 60, 0.2); color: var(--ngn);">NGN</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gray)" stroke-width="2">
+              <circle cx="12" cy="12" r="1"></circle>
+              <circle cx="19" cy="12" r="1"></circle>
+              <circle cx="5" cy="12" r="1"></circle>
+            </svg>
+          </div>
+          <div class="balance-card-label">Nigerian Naira</div>
+          <div class="balance-card-value">₦85,000,000</div>
+          <div class="balance-card-change positive">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+            +8.7% this month
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Grid -->
+      <div class="dashboard-grid">
+        <!-- Transactions -->
+        <div class="transactions-card">
+          <div class="transactions-header">
+            <h3 class="card-title">Recent Transactions</h3>
+            <a href="#" style="font-size: 0.875rem; color: var(--accent);">View All</a>
+          </div>
+          
+          <ul class="transactions-list">
+            <li class="transaction-item">
+              <div class="transaction-info">
+                <div class="transaction-icon" style="background: rgba(46, 204, 113, 0.2);">💰</div>
+                <div class="transaction-details">
+                  <h4>Wire Transfer Received</h4>
+                  <span>Chase Bank • USD</span>
+                </div>
+              </div>
+              <div class="transaction-amount">
+                <div class="transaction-amount-value positive">+$50,000.00</div>
+                <div class="transaction-amount-date">Today, 10:30 AM</div>
+              </div>
+            </li>
+            
+            <li class="transaction-item">
+              <div class="transaction-info">
+                <div class="transaction-icon" style="background: rgba(255, 107, 107, 0.2);">🏢</div>
+                <div class="transaction-details">
+                  <h4>Vendor Payment</h4>
+                  <span>TechSupply Ltd • GBP</span>
+                </div>
+              </div>
+              <div class="transaction-amount">
+                <div class="transaction-amount-value negative">-£12,500.00</div>
+                <div class="transaction-amount-date">Yesterday</div>
+              </div>
+            </li>
+            
+            <li class="transaction-item">
+              <div class="transaction-info">
+                <div class="transaction-icon" style="background: rgba(59, 130, 246, 0.2);">💳</div>
+                <div class="transaction-details">
+                  <h4>Virtual Card Purchase</h4>
+                  <span>AWS Services • USD</span>
+                </div>
+              </div>
+              <div class="transaction-amount">
+                <div class="transaction-amount-value negative">-$2,340.00</div>
+                <div class="transaction-amount-date">Apr 15, 2026</div>
+              </div>
+            </li>
+            
+            <li class="transaction-item">
+              <div class="transaction-info">
+                <div class="transaction-icon" style="background: rgba(0, 212, 170, 0.2);">🏦</div>
+                <div class="transaction-details">
+                  <h4>Currency Conversion</h4>
+                  <span>USD to EUR</span>
+                </div>
+              </div>
+              <div class="transaction-amount">
+                <div class="transaction-amount-value positive">+€45,000.00</div>
+                <div class="transaction-amount-date">Apr 14, 2026</div>
+              </div>
+            </li>
+            
+            <li class="transaction-item">
+              <div class="transaction-info">
+                <div class="transaction-icon" style="background: rgba(255, 215, 0, 0.2);">📄</div>
+                <div class="transaction-details">
+                  <h4>Invoice Payment Received</h4>
+                  <span>GlobalTrade Inc • EUR</span>
+                </div>
+              </div>
+              <div class="transaction-amount">
+                <div class="transaction-amount-value positive">+€28,750.00</div>
+                <div class="transaction-amount-date">Apr 13, 2026</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right Column -->
+        <div>
+          <!-- Quick Actions -->
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+              <h3 class="card-title">Quick Actions</h3>
+            </div>
+            <div class="quick-actions">
+              <div class="quick-action" onclick="handleQuickAction(this)">
+                <div class="quick-action-icon">💸</div>
+                <div class="quick-action-label">Send Money</div>
+              </div>
+              <div class="quick-action" onclick="handleQuickAction(this)">
+                <div class="quick-action-icon">📥</div>
+                <div class="quick-action-label">Request</div>
+              </div>
+              <div class="quick-action" onclick="handleQuickAction(this)">
+                <div class="quick-action-icon">💳</div>
+                <div class="quick-action-label">New Card</div>
+              </div>
+              <div class="quick-action" onclick="handleQuickAction(this)">
+                <div class="quick-action-icon">📄</div>
+                <div class="quick-action-label">Invoice</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spending Overview -->
+          <div class="spending-card">
+            <div class="transactions-header">
+              <h3 class="card-title">Spending Overview</h3>
+              <select class="form-input form-select" style="width: auto; padding: 0.5rem 2rem 0.5rem 0.75rem; font-size: 0.875rem;">
+                <option>This Month</option>
+                <option>Last Month</option>
+                <option>Last 3 Months</option>
+              </select>
+            </div>
+            <div class="chart-placeholder">
+              <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📊</div>
+                <div>Spending by Category</div>
+                <div style="font-size: 0.875rem; color: var(--accent); margin-top: 0.5rem;">Click to view detailed breakdown</div>
+              </div>
+            </div>
+            <div style="margin-top: 1rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+              <div style="padding: 0.75rem; background: var(--primary); border-radius: 8px;">
+                <div style="font-size: 0.75rem; color: var(--gray);">Operations</div>
+                <div style="font-weight: 600;">$45,230</div>
+              </div>
+              <div style="padding: 0.75rem; background: var(--primary); border-radius: 8px;">
+                <div style="font-size: 0.75rem; color: var(--gray);">Payroll</div>
+                <div style="font-weight: 600;">$82,500</div>
+              </div>
+              <div style="padding: 0.75rem; background: var(--primary); border-radius: 8px;">
+                <div style="font-size: 0.75rem; color: var(--gray);">Vendors</div>
+                <div style="font-weight: 600;">$28,340</div>
+              </div>
+              <div style="padding: 0.75rem; background: var(--primary); border-radius: 8px;">
+                <div style="font-size: 0.75rem; color: var(--gray);">Other</div>
+                <div style="font-weight: 600;">$12,180</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Insights Section -->
+      <div style="margin-top: 2rem;">
+        <div class="card">
+          <div class="card-header">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent), #00B894); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                  <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path>
+                  <path d="M8.5 8.5v.01"></path>
+                  <path d="M16 15.5v.01"></path>
+                  <path d="M12 12v.01"></path>
+                  <path d="M11 17v.01"></path>
+                  <path d="M7 14v.01"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="card-title" style="margin-bottom: 0;">CFO Mode Insights</h3>
+                <span style="font-size: 0.75rem; color: var(--gray);">AI-Powered Recommendations</span>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-ghost">Configure</button>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+            <div style="padding: 1.25rem; background: var(--primary); border-radius: 12px; border-left: 3px solid var(--accent);">
+              <div style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">💡 Recommendation</div>
+              <div style="font-weight: 500; margin-bottom: 0.75rem;">Move idle GBP to high-yield fund</div>
+              <div style="font-size: 0.8125rem; color: var(--accent);">Potential gain: £3,200/month →</div>
+            </div>
+            
+            <div style="padding: 1.25rem; background: var(--primary); border-radius: 12px; border-left: 3px solid var(--warning);">
+              <div style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">⚠️ Alert</div>
+              <div style="font-weight: 500; margin-bottom: 0.75rem;">EUR expected to weaken 3%</div>
+              <div style="font-size: 0.8125rem; color: var(--warning);">Consider hedging strategy →</div>
+            </div>
+            
+            <div style="padding: 1.25rem; background: var(--primary); border-radius: 12px; border-left: 3px solid var(--success);">
+              <div style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">✅ Automated</div>
+              <div style="font-weight: 500; margin-bottom: 0.75rem;">$10K swept to NGN account</div>
+              <div style="font-size: 0.8125rem; color: var(--success);">Rule executed successfully →</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chatWidget">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div style="width: 32px; height: 32px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 600;">A</div>
+            <div>
+              <div style="font-weight: 600; font-size: 0.875rem;">Admin Support</div>
+              <div style="font-size: 0.75rem; color: var(--gray);">Online</div>
+            </div>
+          </div>
+        </div>
+        <button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="chat-body" id="chatBody">
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-message admin-message">
+            <div class="message-header">
+              <span class="message-sender">Admin</span>
+              <span class="message-time">Just now</span>
+            </div>
+            <div class="message-content">
+              Hello! Welcome to Borderless NeoBank. How can I assist you today?
+            </div>
+          </div>
+        </div>
+        
+        <div class="chat-input-container">
+          <div class="chat-input-wrapper">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." maxlength="500">
+            <button class="chat-send-btn" id="chatSendBtn" onclick="sendMessage()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13"></polygon>
+              </svg>
+            </button>
+          </div>
+          <div class="chat-typing-indicator" id="typingIndicator" style="display: none;">
+            <span>Admin is typing...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

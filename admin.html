@@ -1,0 +1,2879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Borderless NeoBank</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Admin Dashboard Specific Styles */
+    .dashboard-full-width {
+      min-height: 100vh;
+      background: 
+        radial-gradient(ellipse at top left, rgba(0, 212, 170, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+        linear-gradient(135deg, #0d1b2a 0%, #1a2634 50%, #0d1b2a 100%);
+      padding: 0;
+      margin: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    .dashboard-full-width::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 212, 170, 0.03) 2px,
+          rgba(0, 212, 170, 0.03) 4px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 2px,
+          rgba(59, 130, 246, 0.03) 2px,
+          rgba(59, 130, 246, 0.03) 4px
+        );
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .dashboard-full-width main {
+      padding: 2rem;
+      max-width: 100%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* Enhanced Navigation Bar */
+    .navbar {
+      background: rgba(13, 27, 42, 0.95) !important;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 212, 170, 0.3);
+      box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(0, 212, 170, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      animation: slideDown 0.5s ease-out;
+    }
+    
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    .navbar-container {
+      max-width: 100%;
+      padding: 0 2rem;
+    }
+    
+    .navbar-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    
+    .navbar-links a {
+      color: var(--gray) !important;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .navbar-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 170, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .navbar-links a:hover::before {
+      left: 100%;
+    }
+    
+    .navbar-links a:hover {
+      color: var(--accent) !important;
+      background: rgba(0, 212, 170, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
+    }
+    
+    .navbar-links a.active {
+      color: var(--accent) !important;
+      background: linear-gradient(135deg, rgba(0, 212, 170, 0.3), rgba(0, 184, 148, 0.2));
+      font-weight: 600;
+      box-shadow: 
+        0 4px 12px rgba(0, 212, 170, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    /* Enhanced Dashboard Header */
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding: 2.5rem;
+      background: 
+        linear-gradient(135deg, rgba(13, 27, 42, 0.8), rgba(26, 38, 52, 0.8)),
+        rgba(13, 27, 42, 0.6);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 212, 170, 0.2);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 60px rgba(0, 212, 170, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .dashboard-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0, 212, 170, 0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .dashboard-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(0, 212, 170, 0.3);
+      background: linear-gradient(135deg, var(--white), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .dashboard-date {
+      color: var(--gray);
+      font-size: 1rem;
+      opacity: 0.8;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Enhanced Button Styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1.75rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+    
+    .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #00B894);
+      color: var(--primary);
+      box-shadow: 
+        0 4px 15px rgba(0, 212, 170, 0.4),
+        0 0 30px rgba(0, 212, 170, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 
+        0 8px 25px rgba(0, 212, 170, 0.5),
+        0 0 40px rgba(0, 212, 170, 0.3);
+    }
+    
+    .btn-secondary {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.3));
+      color: var(--info);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      box-shadow: 
+        0 4px 15px rgba(59, 130, 246, 0.3),
+        0 0 30px rgba(59, 130, 246, 0.1);
+    }
+    
+    .btn-secondary:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 
+        0 8px 25px rgba(59, 130, 246, 0.4),
+        0 0 40px rgba(59, 130, 246, 0.2);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(37, 99, 235, 0.4));
+    }
+    
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--gray);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+    
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Enhanced Stats Grid */
+    .admin-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.75rem;
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    
+    .admin-stat-card {
+      background: 
+        linear-gradient(135deg, rgba(13, 27, 42, 0.9), rgba(26, 38, 52, 0.9)),
+        rgba(13, 27, 42, 0.8);
+      border: 1px solid rgba(0, 212, 170, 0.2);
+      border-radius: 16px;
+      padding: 1.75rem;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .admin-stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    .admin-stat-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(0, 212, 170, 0.4);
+      box-shadow: 
+        0 12px 40px rgba(0, 212, 170, 0.3),
+        0 0 60px rgba(0, 212, 170, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .admin-stat-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      position: relative;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .admin-stat-value {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+    
+    .admin-stat-label {
+      color: var(--gray);
+      font-size: 0.875rem;
+      opacity: 0.8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Enhanced Cards */
+    .admin-card, .card {
+      background: 
+        linear-gradient(135deg, rgba(13, 27, 42, 0.9), rgba(26, 38, 52, 0.9)),
+        rgba(13, 27, 42, 0.8);
+      border: 1px solid rgba(0, 212, 170, 0.2);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+    
+    .admin-card::before, .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 170, 0.5), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .admin-card:hover::before, .card:hover::before {
+      opacity: 1;
+    }
+    
+    .admin-card:hover, .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 212, 170, 0.3);
+      box-shadow: 
+        0 12px 40px rgba(0, 212, 170, 0.25),
+        0 0 60px rgba(0, 212, 170, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .admin-card-header, .card-header {
+      padding: 1.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(0, 212, 170, 0.05), transparent);
+    }
+    
+    .admin-card-title, .card-title {
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--white);
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Enhanced Grid Layout */
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    
+    /* Section Styling */
+    section {
+      background: 
+        linear-gradient(135deg, rgba(13, 27, 42, 0.8), rgba(26, 38, 52, 0.8)),
+        rgba(13, 27, 42, 0.6);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 212, 170, 0.2);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 60px rgba(0, 212, 170, 0.1);
+      animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+    
+    /* Search Input Styling */
+    .form-input {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      padding: 0.875rem 1.25rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 
+        0 0 0 3px rgba(0, 212, 170, 0.2),
+        0 4px 12px rgba(0, 212, 170, 0.3);
+      background: rgba(255, 255, 255, 0.12);
+    }
+    
+    .form-input::placeholder {
+      color: var(--gray);
+      opacity: 0.7;
+    }
+    
+    /* Security Toggle Styling */
+    .security-toggle {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--gray);
+      padding: 0.625rem 1.25rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(10px);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+    
+    .security-toggle.active {
+      background: linear-gradient(135deg, var(--success), #10b981);
+      color: var(--white);
+      border-color: var(--success);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+    
+    /* AI Queue Styling */
+    .ai-queue-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .ai-queue-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .ai-queue-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .ai-queue-item:hover::before {
+      transform: scaleY(1);
+    }
+    
+    .ai-queue-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      padding-left: 1.75rem;
+    }
+    
+    .ai-queue-info {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    
+    .ai-queue-icon {
+      font-size: 1.75rem;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    
+    .ai-queue-status {
+      padding: 0.375rem 0.875rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .ai-queue-status.pending {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.2));
+      color: var(--warning);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    
+    .ai-queue-status.approved {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(34, 197, 94, 0.2));
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .dashboard-full-width main {
+        padding: 1rem;
+      }
+      
+      .dashboard-header {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+        padding: 2rem;
+      }
+      
+      .navbar-links {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      
+      .admin-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+      
+      .admin-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .dashboard-title {
+        font-size: 2rem;
+      }
+    }
+    
+    /* Animation Classes */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+    
+    /* Chat Widget Styling */
+    .chat-widget {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 350px;
+      background: 
+        linear-gradient(135deg, rgba(13, 27, 42, 0.95), rgba(26, 38, 52, 0.95)),
+        rgba(13, 27, 42, 0.95);
+      border: 1px solid rgba(0, 212, 170, 0.3);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 60px rgba(0, 212, 170, 0.1);
+    }
+    
+    /* Export Button Specific Fix */
+    .dashboard-header .btn-secondary {
+      min-width: 160px;
+      justify-content: center;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .dashboard-header .btn-primary {
+      min-width: 200px;
+      justify-content: center;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Loading Animation */
+    @keyframes loading {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .loading {
+      animation: loading 1s linear infinite;
+    }
+    
+    /* Glow Effects */
+    .glow {
+      box-shadow: 
+        0 0 20px rgba(0, 212, 170, 0.5),
+        0 0 40px rgba(0, 212, 170, 0.3),
+        0 0 60px rgba(0, 212, 170, 0.1);
+    }
+    
+    /* Neon Text Effect */
+    .neon-text {
+      text-shadow: 
+        0 0 10px rgba(0, 212, 170, 0.8),
+        0 0 20px rgba(0, 212, 170, 0.6),
+        0 0 30px rgba(0, 212, 170, 0.4),
+        0 0 40px rgba(0, 212, 170, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="../index.html" class="navbar-brand">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="#00D4AA"/>
+          <path d="M12 20L20 12L28 20L20 28L12 20Z" fill="#0D1B2A"/>
+          <path d="M20 16L24 20L20 24L16 20L20 16Z" fill="#0D1B2A"/>
+        </svg>
+        Borderless <span style="color: var(--accent); font-size: 0.75rem; font-weight: 600; background: rgba(0, 212, 170, 0.2); padding: 0.25rem 0.5rem; border-radius: 4px;">ADMIN</span>
+      </a>
+      
+      <div class="navbar-menu active" style="display: flex; align-items: center; gap: 1.5rem;">
+        <ul class="navbar-links">
+          <li><a href="admin.html" class="active">Command Center</a></li>
+          <li><a href="#treasury">Treasury</a></li>
+          <li><a href="#ai-governance">AI Governance</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#compliance">Compliance</a></li>
+          <li><a href="#users">Users</a></li>
+        </ul>
+        <div class="navbar-actions">
+          <button class="btn btn-icon btn-ghost" style="position: relative;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span style="position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background: var(--coral); border-radius: 50%;"></span>
+          </button>
+          <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1rem; background: var(--primary-light); border-radius: 8px;">
+            <div style="width: 32px; height: 32px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary); font-size: 0.875rem;">G</div>
+            <span style="font-size: 0.875rem; font-weight: 500;">Governor</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Admin Dashboard -->
+  <div class="dashboard-full-width">
+    <!-- Main Content -->
+    <main>
+      <div id="main-dashboard-content" class="dashboard-header">
+        <div>
+          <h1 class="dashboard-title">Command Center 🛡️</h1>
+          <p class="dashboard-date">Global Operations Dashboard • Friday, April 17, 2026</p>
+        </div>
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Export Report
+          </button>
+          <button class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            System Status: Healthy
+          </button>
+        </div>
+      </div>
+
+      <!-- Admin Stats -->
+      <div class="admin-stats-grid">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon" style="background: rgba(0, 212, 170, 0.2); color: var(--accent);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <div class="admin-stat-value">$2.4B</div>
+          <div class="admin-stat-label">Total Value Locked</div>
+        </div>
+        
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon" style="background: rgba(123, 104, 238, 0.2); color: var(--purple);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <div class="admin-stat-value">50,234</div>
+          <div class="admin-stat-label">Active Users</div>
+        </div>
+        
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon" style="background: rgba(59, 130, 246, 0.2); color: var(--info);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+          </div>
+          <div class="admin-stat-value">$847M</div>
+          <div class="admin-stat-label">Daily Volume</div>
+        </div>
+        
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon" style="background: rgba(255, 107, 107, 0.2); color: var(--coral);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </div>
+          <div class="admin-stat-value">12</div>
+          <div class="admin-stat-label">Pending Alerts</div>
+        </div>
+        
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon" style="background: rgba(255, 215, 0, 0.2); color: var(--gold);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path>
+              <path d="M8.5 8.5v.01"></path>
+              <path d="M16 15.5v.01"></path>
+              <path d="M12 12v.01"></path>
+              <path d="M11 17v.01"></path>
+              <path d="M7 14v.01"></path>
+            </svg>
+          </div>
+          <div class="admin-stat-value">89%</div>
+          <div class="admin-stat-label">AI Efficiency</div>
+        </div>
+      </div>
+
+      <!-- Main Grid -->
+      <div class="admin-grid">
+        <!-- Central Bank Treasury Hub -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">🏦 Central Bank Treasury Hub</h3>
+            <span style="font-size: 0.75rem; color: var(--success); background: rgba(16, 185, 129, 0.2); padding: 0.25rem 0.75rem; border-radius: 4px;">AI AUTOMATED</span>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; padding: 1.5rem;">
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--accent);">Liquidity Forecasting (Global)</h4>
+              <div style="background: var(--primary); padding: 1rem; border-radius: 8px;">
+                <div style="display: grid; gap: 0.75rem;">
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>USD Reserve Required:</span>
+                    <span style="color: var(--success); font-weight: 600;">$850M</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>NGN Reserve Required:</span>
+                    <span style="color: var(--warning); font-weight: 600;">₦1.2B</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>GBP Reserve Required:</span>
+                    <span style="color: var(--success); font-weight: 600;">£450M</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Weekend Coverage:</span>
+                    <span style="color: var(--info); font-weight: 600;">98.7%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--accent);">Inter-Corridor Arbitrage</h4>
+              <div style="background: var(--primary); padding: 1rem; border-radius: 8px;">
+                <div style="display: grid; gap: 0.75rem;">
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Most Cost-Effective:</span>
+                    <span style="color: var(--success); font-weight: 600;">NGN → USD</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Efficiency Score:</span>
+                    <span style="color: var(--info); font-weight: 600;">99.2%</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Annual Savings:</span>
+                    <span style="color: var(--success); font-weight: 600;">$12.4M</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div style="margin-top: 1.5rem; padding: 1rem; background: var(--primary); border-radius: 8px; border-left: 3px solid var(--accent);">
+            <h4 style="margin-bottom: 1rem; color: var(--accent);">Revenue Yield Optimization</h4>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 0.875rem; color: var(--gray);">Float Income:</div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--success);">$847K/day</div>
+              </div>
+              <button class="btn btn-primary">Optimize Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Decision Queue -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">Human-in-the-Loop (HITL) Queue</h3>
+            <span style="font-size: 0.75rem; color: var(--warning); background: rgba(245, 158, 11, 0.2); padding: 0.25rem 0.75rem; border-radius: 4px;">12 Pending</span>
+          </div>
+          
+          <ul class="ai-queue-list">
+            <li class="ai-queue-item">
+              <div class="ai-queue-info">
+                <div class="ai-queue-icon">💰</div>
+                <div class="ai-queue-details">
+                  <h4>Large Wire Transfer</h4>
+                  <span>$500,000 → Suspicious pattern</span>
+                </div>
+              </div>
+              <span class="ai-queue-status pending">Review</span>
+            </li>
+            
+            <li class="ai-queue-item">
+              <div class="ai-queue-info">
+                <div class="ai-queue-icon">🔐</div>
+                <div class="ai-queue-details">
+                  <h4>Account Flagged</h4>
+                  <span>Multiple failed login attempts</span>
+                </div>
+              </div>
+              <span class="ai-queue-status pending">Review</span>
+            </li>
+            
+            <li class="ai-queue-item">
+              <div class="ai-queue-info">
+                <div class="ai-queue-icon">📋</div>
+                <div class="ai-queue-details">
+                  <h4>KYB Verification</h4>
+                  <span>Company documents unclear</span>
+                </div>
+              </div>
+              <span class="ai-queue-status pending">Review</span>
+            </li>
+            
+            <li class="ai-queue-item">
+              <div class="ai-queue-info">
+                <div class="ai-queue-icon">💱</div>
+                <div class="ai-queue-details">
+                  <h4>Currency Exchange</h4>
+                  <span>Above daily limit - Auto-approved</span>
+                </div>
+              </div>
+              <span class="ai-queue-status approved">Approved</span>
+            </li>
+          </ul>
+          
+          <button class="btn btn-ghost w-full" style="margin-top: 1rem; justify-content: center;">
+            View All 12 Items →
+          </button>
+        </div>
+
+        <!-- Security Matrix -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">Security Controls</h3>
+            <button class="btn btn-sm btn-ghost">Configure</button>
+          </div>
+          
+          <div class="security-grid">
+            <div class="security-item">
+              <div class="security-info">
+                <h4>AML Monitoring</h4>
+                <span>Active • 24/7 scanning</span>
+              </div>
+              <div class="security-toggle active"></div>
+            </div>
+            
+            <div class="security-item">
+              <div class="security-info">
+                <h4>Dark Web Alerts</h4>
+                <span>Active • 5 threats detected</span>
+              </div>
+              <div class="security-toggle active"></div>
+            </div>
+            
+            <div class="security-item">
+              <div class="security-info">
+                <h4>USDC Settlement</h4>
+                <span>Active • $2.1M today</span>
+              </div>
+              <div class="security-toggle active"></div>
+            </div>
+            
+            <div class="security-item">
+              <div class="security-info">
+                <h4>Fraud Detection</h4>
+                <span>Active • 99.7% accuracy</span>
+              </div>
+              <div class="security-toggle active"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compliance Calendar -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">Global Tax & Compliance</h3>
+            <button class="btn btn-sm btn-ghost">Full Calendar</button>
+          </div>
+          
+          <div style="display: grid; gap: 1rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--primary); border-radius: 8px; border-left: 3px solid var(--success);">
+              <div style="width: 40px; height: 40px; background: rgba(16, 185, 129, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">🇺🇸</div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500; font-size: 0.9375rem;">IRS Quarterly Filing</div>
+                <div style="font-size: 0.8125rem; color: var(--gray);">Due April 20, 2026</div>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--success);">3 days left</span>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--primary); border-radius: 8px; border-left: 3px solid var(--warning);">
+              <div style="width: 40px; height: 40px; background: rgba(245, 158, 11, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">🇬🇧</div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500; font-size: 0.9375rem;">HMRC VAT Return</div>
+                <div style="font-size: 0.8125rem; color: var(--gray);">Due April 30, 2026</div>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--warning);">13 days left</span>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--primary); border-radius: 8px; border-left: 3px solid var(--info);">
+              <div style="width: 40px; height: 40px; background: rgba(59, 130, 246, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">🇳🇬</div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500; font-size: 0.9375rem;">FIRS Withholding Tax</div>
+                <div style="font-size: 0.8125rem; color: var(--gray);">Due May 15, 2026</div>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--info);">28 days left</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Governance Section -->
+      <div style="margin-top: 2rem;">
+        <div class="card">
+          <div class="card-header">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--purple), #9B59B6); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--white)" stroke-width="2">
+                  <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path>
+                  <path d="M8.5 8.5v.01"></path>
+                  <path d="M16 15.5v.01"></path>
+                  <path d="M12 12v.01"></path>
+                  <path d="M11 17v.01"></path>
+                  <path d="M7 14v.01"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="card-title" style="margin-bottom: 0;">AI Governance & Ethics Portal</h3>
+                <span style="font-size: 0.75rem; color: var(--gray);">EU AI Act Compliant • Model Explainability</span>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-secondary">Run Audit</button>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;">
+            <div style="padding: 1.25rem; background: var(--primary); border-radius: 12px; text-align: center;">
+              <div style="font-size: 2rem; font-weight: 700; color: var(--success); margin-bottom: 0.5rem;">99.2%</div>
+              <div style="font-size: 0.875rem; color: var(--gray);">Model Accuracy</div>
+            </div>
+            
+            <div style="padding: 1.25rem; background: var(--primary); border-radius: 12px; text-align: center;">
+              <div style="font-size: 2rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">0.03%</div>
+              <div style="font-size: 0.875rem; color: var(--gray);">Bias Detection Rate</div>
+            </div>
+            
+            <div style="padding: 1.25rem; background: var(--primary); border-radius: 12px; text-align: center;">
+              <div style="font-size: 2rem; font-weight: 700; color: var(--info); margin-bottom: 0.5rem;">1,247</div>
+              <div style="font-size: 0.875rem; color: var(--gray);">Decisions Today</div>
+            </div>
+            
+            <div style="padding: 1.25rem; background: var(--primary); border-radius: 12px; text-align: center;">
+              <div style="font-size: 2rem; font-weight: 700; color: var(--warning); margin-bottom: 0.5rem;">8</div>
+              <div style="font-size: 0.875rem; color: var(--gray);">Flagged for Review</div>
+            </div>
+          </div>
+          
+          <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0, 212, 170, 0.1); border-radius: 8px; border: 1px solid rgba(0, 212, 170, 0.2);">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 10 10 4 4 0 0 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span style="color: var(--accent); font-weight: 500;">EU AI Act Compliance Status: Fully Compliant</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prompt Engineering Lab -->
+      <div style="margin-top: 2rem;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">🧪 Prompt Engineering Lab</h3>
+            <span style="font-size: 0.75rem; color: var(--info); background: rgba(59, 130, 246, 0.2); padding: 0.25rem 0.75rem; border-radius: 4px;">AI CUSTOMIZATION</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; padding: 1.5rem;">
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--accent);">AI Personality Customization</h4>
+              <div style="background: var(--primary); padding: 1rem; border-radius: 8px;">
+                <div style="display: grid; gap: 1rem;">
+                  <div>
+                    <label class="form-label">AI Tone</label>
+                    <select class="form-input form-select">
+                      <option>Professional</option>
+                      <option>Friendly</option>
+                      <option>Strict</option>
+                      <option>Concise</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label">Response Style</label>
+                    <select class="form-input form-select">
+                      <option>Detailed</option>
+                      <option>Quick</option>
+                      <option>Executive Summary</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label">Risk Tolerance</label>
+                    <select class="form-input form-select">
+                      <option>Conservative</option>
+                      <option>Moderate</option>
+                      <option>Aggressive</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 1rem;">Apply AI Personality</button>
+              </div>
+            </div>
+            
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--accent);">Global Rules Engine</h4>
+              <div style="background: var(--primary); padding: 1rem; border-radius: 8px;">
+                <div style="display: grid; gap: 1rem;">
+                  <div>
+                    <label class="form-label">Fraud Detection Sensitivity</label>
+                    <input type="range" class="form-input" min="1" max="10" value="7">
+                  </div>
+                  <div>
+                    <label class="form-label">AML Threshold</label>
+                    <input type="number" class="form-input" value="10000" min="1000">
+                  </div>
+                  <div>
+                    <label class="form-label">KYC Automation Level</label>
+                    <select class="form-input form-select">
+                      <option>Level 1: Basic</option>
+                      <option>Level 2: Enhanced</option>
+                      <option>Level 3: Full Automation</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 1rem;">Deploy Global Rules</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Autonomous Security Matrix -->
+      <div style="margin-top: 2rem;">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">⚡ Quantum Security Kill Switch Matrix</h3>
+            <span style="font-size: 0.75rem; color: var(--success); background: rgba(16, 185, 129, 0.2); padding: 0.25rem 0.75rem; border-radius: 4px;">GOD MODE</span>
+          </div>
+          <div style="display: grid; gap: 1.5rem; padding: 1.5rem;">
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--accent);">Granular Feature Control</h4>
+              <div style="background: var(--primary); padding: 1rem; border-radius: 8px;">
+                <div style="display: grid; gap: 1rem;">
+                  <div class="security-item">
+                    <div class="security-info">
+                      <h4>USD Transfers</h4>
+                      <span>Status: Active</span>
+                    </div>
+                    <button class="security-toggle active">Disable</button>
+                  </div>
+                  <div class="security-item">
+                    <div class="security-info">
+                      <h4>NGN Transfers</h4>
+                      <span>Status: Active</span>
+                    </div>
+                    <button class="security-toggle active">Disable</button>
+                  </div>
+                  <div class="security-item">
+                    <div class="security-info">
+                      <h4>Crypto Operations</h4>
+                      <span>Status: Active</span>
+                    </div>
+                    <button class="security-toggle active">Disable</button>
+                  </div>
+                  <div class="security-item">
+                    <div class="security-info">
+                      <h4>User Registration</h4>
+                      <span>Status: Active</span>
+                    </div>
+                    <button class="security-toggle active">Disable</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--accent);">Emergency Protocols</h4>
+              <div style="background: var(--primary); padding: 1rem; border-radius: 8px;">
+                <div style="display: grid; gap: 1rem;">
+                  <button class="btn btn-ghost" style="justify-content: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0-3.42 0z"></path>
+                      <line x1="12" y1="9" x2="12" y2="13"></line>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Level 1: Partial Isolation
+                  </button>
+                  <button class="btn btn-warning" style="justify-content: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0-3.42 0z"></path>
+                      <line x1="12" y1="9" x2="12" y2="13"></line>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Level 2: Regional Isolation
+                  </button>
+                  <button class="btn btn-coral" style="justify-content: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0-3.42 0z"></path>
+                      <line x1="12" y1="9" x2="12" y2="13"></line>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Level 3: Total Shutdown
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--accent);">Dark Web Monitor</h4>
+              <div style="background: var(--primary); padding: 1rem; border-radius: 8px;">
+                <div style="display: grid; gap: 1rem;">
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Scanned Forums:</span>
+                    <span style="color: var(--success); font-weight: 600;">247</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Leaked Credentials:</span>
+                    <span style="color: var(--warning); font-weight: 600;">3</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Platform Mentions:</span>
+                    <span style="color: var(--info); font-weight: 600;">1,247</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Last Scan:</span>
+                    <span style="color: var(--success); font-weight: 600;">2 minutes ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Global Sentiment Analytics -->
+      <div style="margin-top: 2rem;">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">📊 Real-Time Global Sentiment & Support Analytics</h3>
+            <span style="font-size: 0.75rem; color: var(--info); background: rgba(59, 130, 246, 0.2); padding: 0.25rem 0.75rem; border-radius: 4px;">AI ANALYZED</span>
+          </div>
+          <div style="display: grid; gap: 1.5rem; padding: 1.5rem;">
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--accent);">Support Ticket Sentiment</h4>
+              <div style="background: var(--primary); padding: 1rem; border-radius: 8px;">
+                <div style="display: grid; gap: 1rem;">
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Total Tickets:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--info);">12,847</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Mood Score:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--success);">87.3/100</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Frustration Level:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--warning);">Low</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Response Time:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--success);">2.3 min</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--accent);">AI-Powered Insights</h4>
+              <div style="background: var(--primary); padding: 1rem; border-radius: 8px;">
+                <div style="display: grid; gap: 1rem;">
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Top Issue:</span>
+                    <span style="color: var(--warning); font-weight: 600;">Mobile App Performance</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Users Affected:</span>
+                    <span style="color: var(--coral); font-weight: 600;">2,347</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Recommended Action:</span>
+                    <span style="color: var(--info); font-weight: 600;">Deploy Hotfix</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Impact Score:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--warning);">6.7/10</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enterprise Network Ecosystem -->
+      <div style="margin-top: 2rem;">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 class="admin-card-title">🔗 Enterprise API & Network Ecosystem</h3>
+            <span style="font-size: 0.75rem; color: var(--success); background: rgba(16, 185, 129, 0.2); padding: 0.25rem 0.75rem; border-radius: 4px;">MARKETPLACE ACTIVE</span>
+          </div>
+          <div style="display: grid; gap: 1.5rem; padding: 1.5rem;">
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--accent);">API Integrations</h4>
+              <div style="background: var(--primary); padding: 1rem; border-radius: 8px;">
+                <div style="display: grid; gap: 1rem;">
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Total APIs:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--info);">1,847</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Daily Calls:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--success);">2.4M</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Latency:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--success);">12ms</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Uptime:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--success);">99.99%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h4 style="margin-bottom: 1rem; color: var(--accent);">Network Effects</h4>
+              <div style="background: var(--primary); padding: 1rem; border-radius: 8px;">
+                <div style="display: grid; gap: 1rem;">
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Network Value:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">$24.7B</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Throughput:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--info);">1.2M TPS</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>Partners:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--success);">234</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>White-Label Clients:</span>
+                    <span style="font-size: 1.5rem; font-weight: 700; color: var(--warning);">47</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Command Center Section -->
+  <section id="command-center" style="display: none; padding: 2rem; background: var(--primary);">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Command Center</h2>
+        <p style="color: var(--gray);">Central operations control and monitoring</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+        <div class="card" style="padding: 1.5rem;">
+          <h3 style="margin-bottom: 1rem; color: var(--accent);">System Status</h3>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span>API Health</span>
+              <span style="color: var(--success);">● Online</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span>Database</span>
+              <span style="color: var(--success);">● Operational</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span>Queue Processing</span>
+              <span style="color: var(--warning);">● Delayed</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding: 1.5rem;">
+          <h3 style="margin-bottom: 1rem; color: var(--info);">Quick Actions</h3>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <button class="btn btn-secondary" style="width: 100%;">Clear Cache</button>
+            <button class="btn btn-ghost" style="width: 100%;">Restart Services</button>
+            <button class="btn btn-primary" style="width: 100%;">Emergency Mode</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Treasury Section -->
+  <section id="treasury" style="display: none; padding: 2rem; background: var(--primary);">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">🏦 Global Treasury Operations Center</h2>
+        <p style="color: var(--gray);">Central bank-level liquidity management and global cash flow optimization</p>
+        <span style="font-size: 0.75rem; color: var(--success); background: rgba(16, 185, 129, 0.2); padding: 0.25rem 0.75rem; border-radius: 4px;">AI AUTOMATED</span>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; padding: 2rem;">
+        <!-- Liquidity Management -->
+        <div>
+          <h4 style="margin-bottom: 1.5rem; color: var(--accent);">💰 Multi-Currency Liquidity Management</h4>
+          <div style="background: var(--primary); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--success);">
+            <div style="display: grid; gap: 1rem;">
+              <div style="display: flex; justify-content: space-between;">
+                <span>USD Reserve:</span>
+                <span style="color: var(--success); font-weight: 600;">$1.2B Available</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>EUR Reserve:</span>
+                <span style="color: var(--success); font-weight: 600;">€850M Available</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>GBP Reserve:</span>
+                <span style="color: var(--success); font-weight: 600;">£650M Available</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>NGN Reserve:</span>
+                <span style="color: var(--warning); font-weight: 600;">₦2.1B Available</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>CAD Reserve:</span>
+                <span style="color: var(--info); font-weight: 600;">C$450M Available</span>
+              </div>
+            </div>
+            <button class="btn btn-primary" style="margin-top: 1rem;">Rebalance Reserves</button>
+          </div>
+        </div>
+        
+        <!-- Cross-Border Settlement Rails -->
+        <div>
+          <h4 style="margin-bottom: 1.5rem; color: var(--accent);">🌐 Cross-Border Settlement Rails</h4>
+          <div style="background: var(--primary); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--info);">
+            <div style="display: grid; gap: 1rem;">
+              <div style="display: flex; justify-content: space-between;">
+                <span>Most Active Corridor:</span>
+                <span style="color: var(--success); font-weight: 600;">Nigeria → US</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>Daily Volume:</span>
+                <span style="color: var(--info); font-weight: 600;">$47.3M</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>Settlement Speed:</span>
+                <span style="color: var(--success); font-weight: 600;">12.3 seconds</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>Cost Efficiency:</span>
+                <span style="color: var(--success); font-weight: 600;">98.7%</span>
+              </div>
+            </div>
+            <button class="btn btn-secondary" style="margin-top: 1rem;">Optimize Routes</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- AI-Powered Yield Optimization -->
+      <div style="margin-top: 2rem;">
+        <h4 style="margin-bottom: 1.5rem; color: var(--accent);">🤖 AI-Powered Yield Optimization</h4>
+        <div style="background: var(--primary); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--warning);">
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+              <div>
+                <div style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">Current Float Income</div>
+                <div style="font-size: 2rem; font-weight: 700; color: var(--success);">$847K/day</div>
+                <div style="font-size: 0.75rem; color: var(--gray);">From $2.4B total float</div>
+              </div>
+              <div>
+                <div style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">Optimized Potential</div>
+                <div style="font-size: 2rem; font-weight: 700; color: var(--accent);">$1.2M/day</div>
+                <div style="font-size: 0.75rem; color: var(--gray);">+42% increase</div>
+              </div>
+            </div>
+            <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0, 212, 170, 0.1); border-radius: 8px; border: 1px solid rgba(0, 212, 170, 0.2);">
+              <h5 style="color: var(--accent); margin-bottom: 1rem;">AI Recommendation</h5>
+              <p style="margin-bottom: 1rem;">Reallocate 60% of float to high-yield US Treasury bonds and 40% to diversified crypto staking pools for optimal risk-adjusted returns.</p>
+              <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-primary">Apply AI Optimization</button>
+                <button class="btn btn-ghost">Review Strategy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Global Settlement Network -->
+      <div style="margin-top: 2rem;">
+        <h4 style="margin-bottom: 1.5rem; color: var(--accent);">🌍 Global Settlement Network</h4>
+        <div style="background: var(--primary); padding: 1.5rem; border-radius: 8px;">
+          <div style="display: grid; gap: 1rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Active Settlement Partners:</span>
+              <span style="color: var(--info); font-weight: 600;">47 Global Banks</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Real-Time Settlement Rate:</span>
+              <span style="color: var(--success); font-weight: 600;">99.94%</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Average Settlement Time:</span>
+              <span style="color: var(--success); font-weight: 600;">2.3 seconds</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Failed Settlement Rate:</span>
+              <span style="color: var(--success); font-weight: 600;">0.06%</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Network Uptime:</span>
+              <span style="color: var(--success); font-weight: 600;">99.99%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Risk Management Dashboard -->
+      <div style="margin-top: 2rem;">
+        <h4 style="margin-bottom: 1.5rem; color: var(--accent);">⚠️ Advanced Risk Management</h4>
+        <div style="background: var(--primary); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--coral);">
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+              <div>
+                <div style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">Currency Risk Exposure</div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--warning);">$450M</div>
+                <div style="font-size: 0.75rem; color: var(--gray);">Total exposure across all currencies</div>
+              </div>
+              <div>
+                <div style="font-size: 0.875rem; color: var(--gray); margin-bottom: 0.5rem;">Counterparty Risk</div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--warning);">Medium</div>
+                <div style="font-size: 0.75rem; color: var(--gray);">AI assessment of partner risk levels</div>
+              </div>
+            </div>
+            <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2);">
+              <h5 style="color: var(--coral); margin-bottom: 1rem;">⚠️ Risk Alert</h5>
+              <p style="margin-bottom: 1rem;">High exposure detected in NGN corridor due to volatile market conditions. AI recommends immediate hedging strategy.</p>
+              <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-warning">Execute Hedge Strategy</button>
+                <button class="btn btn-ghost">View Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Governance Section -->
+  <section id="ai-governance" style="display: none; padding: 2rem; background: var(--primary);">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">AI Governance</h2>
+        <p style="color: var(--gray);">Ethical AI oversight and compliance monitoring</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+        <div class="card" style="padding: 1.5rem;">
+          <h4 style="margin-bottom: 1rem; color: var(--purple);">Model Performance</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Accuracy</span>
+              <span style="color: var(--success);">99.7%</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Fairness Score</span>
+              <span style="color: var(--success);">A+</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Explainability</span>
+              <span style="color: var(--warning);">87%</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding: 1.5rem;">
+          <h4 style="margin-bottom: 1rem; color: var(--purple);">Compliance Status</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>EU AI Act</span>
+              <span style="color: var(--success);">✓ Compliant</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Data Governance</span>
+              <span style="color: var(--success);">✓ Active</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Ethics Review</span>
+              <span style="color: var(--info);">In Progress</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security Section -->
+  <section id="security" style="display: none; padding: 2rem; background: var(--primary);">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Security Center</h2>
+        <p style="color: var(--gray);">Advanced security monitoring and threat detection</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+        <div class="card" style="padding: 1.5rem;">
+          <h4 style="margin-bottom: 1rem; color: var(--warning);">Threat Detection</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Active Threats</span>
+              <span style="color: var(--coral);">3</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Blocked Today</span>
+              <span style="color: var(--success);">247</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>False Positives</span>
+              <span style="color: var(--info);">0.2%</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding: 1.5rem;">
+          <h4 style="margin-bottom: 1rem; color: var(--success);">Access Control</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Failed Logins</span>
+              <span style="color: var(--warning);">12</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Suspicious Activity</span>
+              <span style="color: var(--coral);">8</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Blocked IPs</span>
+              <span style="color: var(--success);">1,847</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding: 1.5rem;">
+          <h4 style="margin-bottom: 1rem; color: var(--info);">System Integrity</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Firewall Status</span>
+              <span style="color: var(--success);">Active</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Encryption</span>
+              <span style="color: var(--success);">AES-256</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Backup Status</span>
+              <span style="color: var(--success);">Current</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compliance Section -->
+  <section id="compliance" style="display: none; padding: 2rem; background: var(--primary);">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Compliance Center</h2>
+        <p style="color: var(--gray);">Regulatory compliance and audit management</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+        <div class="card" style="padding: 1.5rem;">
+          <h4 style="margin-bottom: 1rem; color: var(--accent);">Regulatory Status</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>KYC/AML</span>
+              <span style="color: var(--success);">Compliant</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>GDPR</span>
+              <span style="color: var(--success);">Compliant</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>SOX</span>
+              <span style="color: var(--warning);">Review Needed</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>PCI DSS</span>
+              <span style="color: var(--success);">Level 1</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding: 1.5rem;">
+          <h4 style="margin-bottom: 1rem; color: var(--accent);">Audit Trail</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Last Audit</span>
+              <span style="color: var(--info);">Mar 15, 2026</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Pending Reviews</span>
+              <span style="color: var(--warning);">3</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Completed Audits</span>
+              <span style="color: var(--success);">47</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Risk Score</span>
+              <span style="color: var(--success);">Low</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Users Section -->
+  <section id="users" style="display: none; padding: 2rem; background: var(--primary);">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">User Management</h2>
+        <p style="color: var(--gray);">Manage user accounts and permissions</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+        <div class="card" style="padding: 1.5rem;">
+          <h4 style="margin-bottom: 1rem; color: var(--info);">User Statistics</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Total Users</span>
+              <span style="color: var(--white); font-weight: 700;">50,234</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Active Today</span>
+              <span style="color: var(--success);">12,456</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>New This Week</span>
+              <span style="color: var(--accent);">342</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Blocked Users</span>
+              <span style="color: var(--coral);">89</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding: 1.5rem;">
+          <h4 style="margin-bottom: 1rem; color: var(--warning);">Recent Activity</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>Login Attempts</span>
+              <span style="color: var(--warning);">1,247</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Password Resets</span>
+              <span style="color: var(--info);">34</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Account Changes</span>
+              <span style="color: var(--accent);">156</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Failed Logins</span>
+              <span style="color: var(--coral);">89</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding: 1.5rem;">
+          <h4 style="margin-bottom: 1rem; color: var(--success);">Quick Actions</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <button class="btn btn-primary" style="width: 100%;">Add New User</button>
+            <button class="btn btn-secondary" style="width: 100%;">Export User List</button>
+            <button class="btn btn-ghost" style="width: 100%;">Bulk Operations</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Admin Dashboard Navigation System
+    let currentSection = 'main';
+    let dashboardData = {
+      totalValueLocked: 0,
+      activeUsers: 0,
+      dailyVolume: 0,
+      pendingAlerts: 0,
+      aiEfficiency: 0,
+      treasuryReserves: {},
+      settlementData: {},
+      riskMetrics: {},
+      systemStatus: 'healthy'
+    };
+    
+    // Real-time Data Fetching System
+    class DashboardDataService {
+      constructor() {
+        this.updateInterval = 5000; // Update every 5 seconds
+        this.isRunning = false;
+        this.mockDataEnabled = true; // Toggle for real vs mock data
+      }
+      
+      async fetchRealTimeData() {
+        try {
+          // Simulate real API calls with realistic data
+          const data = await this.generateRealisticData();
+          return data;
+        } catch (error) {
+          console.error('Error fetching dashboard data:', error);
+          return this.getFallbackData();
+        }
+      }
+      
+      async generateRealisticData() {
+        // Simulate realistic banking metrics
+        const baseTVL = 2400000000; // $2.4B base
+        const baseUsers = 50000;
+        const baseVolume = 850000000; // $850M base
+        
+        // Add realistic fluctuations
+        const timeVariation = Math.sin(Date.now() / 10000) * 0.05; // 5% variation
+        const randomVariation = (Math.random() - 0.5) * 0.02; // 2% random variation
+        
+        return {
+          totalValueLocked: Math.round(baseTVL * (1 + timeVariation + randomVariation)),
+          activeUsers: Math.round(baseUsers * (1 + randomVariation) + Math.random() * 100),
+          dailyVolume: Math.round(baseVolume * (1 + timeVariation * 0.8 + randomVariation)),
+          pendingAlerts: Math.floor(Math.random() * 20) + 5,
+          aiEfficiency: Math.round(85 + Math.random() * 10 + Math.sin(Date.now() / 8000) * 3),
+          timestamp: new Date().toISOString(),
+          treasuryReserves: {
+            USD: Math.round(1200000000 * (1 + randomVariation)),
+            EUR: Math.round(850000000 * (1 + randomVariation)),
+            GBP: Math.round(650000000 * (1 + randomVariation)),
+            NGN: Math.round(2100000000 * (1 + randomVariation * 1.2)),
+            CAD: Math.round(450000000 * (1 + randomVariation))
+          },
+          settlementData: {
+            mostActiveCorridor: 'Nigeria-US',
+            dailyVolume: Math.round(47300000 * (1 + randomVariation)),
+            settlementSpeed: (12.3 + Math.random() * 2 - 1).toFixed(1),
+            efficiency: (99.2 + Math.random() * 0.5 - 0.25).toFixed(1),
+            annualSavings: Math.round(12400000 * (1 + randomVariation * 0.5))
+          },
+          riskMetrics: {
+            currencyExposure: Math.round(450000000 * (1 + randomVariation * 0.8)),
+            counterpartyRisk: ['Low', 'Medium', 'High'][Math.floor(Math.random() * 3)],
+            riskScore: Math.round(3 + Math.random() * 4),
+            alertsGenerated: Math.floor(Math.random() * 8) + 2
+          },
+          systemStatus: this.getSystemStatus(),
+          uptime: (99.99 - Math.random() * 0.05).toFixed(2),
+          responseTime: Math.round(12 + Math.random() * 8),
+          blockedThreats: Math.floor(Math.random() * 50) + 200,
+          apiCalls: Math.round(2400000 * (1 + randomVariation * 0.3))
+        };
+      }
+      
+      getSystemStatus() {
+        const statuses = ['healthy', 'warning', 'critical'];
+        const weights = [0.85, 0.12, 0.03]; // 85% healthy, 12% warning, 3% critical
+        const random = Math.random();
+        
+        if (random < weights[0]) return 'healthy';
+        if (random < weights[0] + weights[1]) return 'warning';
+        return 'critical';
+      }
+      
+      getFallbackData() {
+        return {
+          totalValueLocked: 2400000000,
+          activeUsers: 50234,
+          dailyVolume: 847000000,
+          pendingAlerts: 12,
+          aiEfficiency: 89,
+          systemStatus: 'healthy'
+        };
+      }
+      
+      formatCurrency(amount, currency = 'USD') {
+        const symbols = {
+          USD: '$',
+          EUR: 'EUR ',
+          GBP: '£',
+          NGN: 'NGN ',
+          CAD: 'C$'
+        };
+        
+        if (currency === 'NGN') {
+          return symbols[currency] + (amount / 1000000).toFixed(1) + 'M';
+        }
+        
+        if (amount >= 1000000000) {
+          return symbols[currency] + (amount / 1000000000).toFixed(1) + 'B';
+        } else if (amount >= 1000000) {
+          return symbols[currency] + (amount / 1000000).toFixed(1) + 'M';
+        } else if (amount >= 1000) {
+          return symbols[currency] + (amount / 1000).toFixed(1) + 'K';
+        }
+        return symbols[currency] + amount.toLocaleString();
+      }
+      
+      formatNumber(num) {
+        return num.toLocaleString();
+      }
+      
+      startRealTimeUpdates() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+        
+        const updateDashboard = async () => {
+          if (!this.isRunning) return;
+          
+          try {
+            const data = await this.fetchRealTimeData();
+            dashboardData = data;
+            updateDashboardUI(data);
+          } catch (error) {
+            console.error('Update failed:', error);
+          }
+          
+          setTimeout(updateDashboard, this.updateInterval);
+        };
+        
+        updateDashboard();
+      }
+      
+      stopRealTimeUpdates() {
+        this.isRunning = false;
+      }
+    }
+    
+    // Initialize data service
+    const dataService = new DashboardDataService();
+    
+    // Update Dashboard UI
+    function updateDashboardUI(data) {
+      // Update stats cards
+      updateStatCard('tvl', dataService.formatCurrency(data.totalValueLocked));
+      updateStatCard('users', dataService.formatNumber(data.activeUsers));
+      updateStatCard('volume', dataService.formatCurrency(data.dailyVolume));
+      updateStatCard('alerts', dataService.formatNumber(data.pendingAlerts));
+      updateStatCard('efficiency', data.aiEfficiency + '%');
+      
+      // Update treasury section
+      updateTreasuryData(data.treasuryReserves);
+      
+      // Update settlement data
+      updateSettlementData(data.settlementData);
+      
+      // Update risk metrics
+      updateRiskMetrics(data.riskMetrics);
+      
+      // Update system status
+      updateSystemStatus(data.systemStatus);
+      
+      // Update timestamp
+      updateTimestamp();
+      
+      // Add visual indicators for changes
+      highlightChanges(data);
+    }
+    
+    function updateStatCard(type, value) {
+      const cards = document.querySelectorAll('.admin-stat-value');
+      cards.forEach(card => {
+        const label = card.nextElementSibling?.textContent?.toLowerCase() || '';
+        
+        if (label.includes('value locked') && type === 'tvl') {
+          animateValueChange(card, value);
+        } else if (label.includes('users') && type === 'users') {
+          animateValueChange(card, value);
+        } else if (label.includes('volume') && type === 'volume') {
+          animateValueChange(card, value);
+        } else if (label.includes('alerts') && type === 'alerts') {
+          animateValueChange(card, value);
+        } else if (label.includes('efficiency') && type === 'efficiency') {
+          animateValueChange(card, value);
+        }
+      });
+    }
+    
+    function animateValueChange(element, newValue) {
+      const oldValue = element.textContent;
+      if (oldValue !== newValue) {
+        element.style.transition = 'color 0.3s ease';
+        element.style.color = 'var(--accent)';
+        element.textContent = newValue;
+        
+        setTimeout(() => {
+          element.style.color = 'var(--white)';
+        }, 300);
+      }
+    }
+    
+    function updateTreasuryData(reserves) {
+      // Update treasury reserves display
+      const reserveElements = {
+        'USD Reserve': reserves.USD,
+        'EUR Reserve': reserves.EUR,
+        'GBP Reserve': reserves.GBP,
+        'NGN Reserve': reserves.NGN,
+        'CAD Reserve': reserves.CAD
+      };
+      
+      Object.entries(reserveElements).forEach(([label, value]) => {
+        const elements = document.querySelectorAll('span');
+        elements.forEach(el => {
+          if (el.textContent.includes(label)) {
+            const valueElement = el.parentElement?.querySelector('span:last-child');
+            if (valueElement) {
+              valueElement.textContent = dataService.formatCurrency(value, label.split(' ')[0]);
+            }
+          }
+        });
+      });
+    }
+    
+    function updateSettlementData(settlement) {
+      // Update settlement corridor data
+      const elements = document.querySelectorAll('span');
+      elements.forEach(el => {
+        if (el.textContent.includes('Most Active Corridor')) {
+          const valueElement = el.parentElement?.querySelector('span:last-child');
+          if (valueElement) {
+            valueElement.textContent = settlement.mostActiveCorridor;
+          }
+        } else if (el.textContent.includes('Daily Volume')) {
+          const valueElement = el.parentElement?.querySelector('span:last-child');
+          if (valueElement) {
+            valueElement.textContent = dataService.formatCurrency(settlement.dailyVolume);
+          }
+        } else if (el.textContent.includes('Settlement Speed')) {
+          const valueElement = el.parentElement?.querySelector('span:last-child');
+          if (valueElement) {
+            valueElement.textContent = settlement.settlementSpeed + ' seconds';
+          }
+        }
+      });
+    }
+    
+    function updateRiskMetrics(risk) {
+      // Update risk metrics
+      const elements = document.querySelectorAll('span');
+      elements.forEach(el => {
+        if (el.textContent.includes('Currency Risk Exposure')) {
+          const valueElement = el.parentElement?.querySelector('div');
+          if (valueElement) {
+            valueElement.textContent = dataService.formatCurrency(risk.currencyExposure);
+          }
+        } else if (el.textContent.includes('Counterparty Risk')) {
+          const valueElement = el.parentElement?.querySelector('div');
+          if (valueElement) {
+            valueElement.textContent = risk.counterpartyRisk;
+          }
+        }
+      });
+    }
+    
+    function updateSystemStatus(status) {
+      const statusButton = document.querySelector('.btn-primary');
+      if (statusButton) {
+        const statusColors = {
+          healthy: 'var(--success)',
+          warning: 'var(--warning)',
+          critical: 'var(--coral)'
+        };
+        
+        const statusText = {
+          healthy: 'System Status: Healthy',
+          warning: 'System Status: Warning',
+          critical: 'System Status: Critical'
+        };
+        
+        statusButton.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          ${statusText[status]}
+        `;
+        
+        statusButton.style.borderColor = statusColors[status];
+      }
+    }
+    
+    function updateTimestamp() {
+      const dateElement = document.querySelector('.dashboard-date');
+      if (dateElement) {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateElement.textContent = 'Global Operations Dashboard \u2022 ' + now.toLocaleDateString('en-US', options);
+      }
+    }
+    
+    function highlightChanges(data) {
+      // Add visual indicators for significant changes
+      if (data.pendingAlerts > 15) {
+        const alertCard = document.querySelector('.admin-stat-card:nth-child(4)');
+        if (alertCard) {
+          alertCard.style.borderColor = 'var(--coral)';
+          alertCard.style.animation = 'pulse 1s infinite';
+        }
+      }
+    }
+    
+    // Show specific admin section
+    function showAdminSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('section').forEach(section => {
+        section.style.display = 'none';
+      });
+      
+      // Hide main dashboard content
+      const mainContent = document.getElementById('main-dashboard-content');
+      if (mainContent) {
+        mainContent.style.display = 'none';
+      }
+      
+      // Also hide other main dashboard elements
+      document.querySelectorAll('main > div:not([id])').forEach(el => {
+        if (el.id !== 'main-dashboard-content') {
+          el.style.display = 'none';
+        }
+      });
+      
+      // Show selected section
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        targetSection.style.display = 'block';
+        currentSection = sectionId;
+      }
+      
+      // Update navigation active state
+      updateNavigationActive(sectionId);
+      
+      // Update page title
+      updatePageTitle(sectionId);
+    }
+    
+    // Update navigation active state
+    function updateNavigationActive(sectionId) {
+      // Remove active class from all nav links
+      document.querySelectorAll('.navbar-links a').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      // Add active class to current section link
+      const activeLink = document.querySelector(`a[href="#${sectionId}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+      
+      // Special handling for command center
+      if (sectionId === 'command-center' || sectionId === 'main') {
+        const commandCenterLink = document.querySelector('a[href="admin.html"]');
+        if (commandCenterLink) {
+          commandCenterLink.classList.add('active');
+        }
+      }
+    }
+    
+    // Update page title
+    function updatePageTitle(sectionId) {
+      const titles = {
+        'command-center': 'Command Center',
+        'treasury': 'Treasury Operations',
+        'ai-governance': 'AI Governance',
+        'security': 'Security Center',
+        'compliance': 'Compliance Center',
+        'users': 'User Management'
+      };
+      
+      const titleElement = document.querySelector('.dashboard-title');
+      if (titleElement && titles[sectionId]) {
+        titleElement.textContent = titles[sectionId] + ' ' + (sectionId === 'command-center' ? 'command-center' : '');
+      }
+    }
+    
+    // Initialize navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add click handlers to navigation links
+      document.querySelectorAll('.navbar-links a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const sectionId = this.getAttribute('href').substring(1);
+          showAdminSection(sectionId);
+        });
+      });
+      
+      // Add click handler for Command Center link
+      const commandCenterLink = document.querySelector('a[href="admin.html"]');
+      if (commandCenterLink) {
+        commandCenterLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          showMainDashboard();
+        });
+      }
+      
+      // Security toggle functionality
+      document.querySelectorAll('.security-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+          this.classList.toggle('active');
+          const isActive = this.classList.contains('active');
+          this.textContent = isActive ? 'Disable' : 'Enable';
+          
+          // Update status text
+          const statusSpan = this.parentElement.querySelector('span');
+          if (statusSpan) {
+            statusSpan.textContent = isActive ? 'Status: Active' : 'Status: Disabled';
+          }
+          
+          // Trigger security system update
+          updateSecuritySystem(isActive);
+        });
+      });
+      
+      // Add interactive features for cards
+      addCardInteractions();
+      
+      // Add functional button handlers
+      addFunctionalButtonHandlers();
+      
+      // Start real-time data service
+      dataService.startRealTimeUpdates();
+      
+      // Initialize dashboard
+      showMainDashboard();
+      
+      // Add WebSocket connection for real-time updates
+      initializeWebSocketConnection();
+    });
+    
+    // Functional Button Handlers
+    function addFunctionalButtonHandlers() {
+      // Export button functionality
+      const exportBtn = document.querySelector('.btn-secondary');
+      if (exportBtn && exportBtn.textContent.includes('Export Report')) {
+        exportBtn.addEventListener('click', function() {
+          exportDashboardData();
+        });
+      }
+      
+      // Optimize button functionality
+      const optimizeBtns = document.querySelectorAll('.btn-primary');
+      optimizeBtns.forEach(btn => {
+        if (btn.textContent.includes('Optimize Now')) {
+          btn.addEventListener('click', function() {
+            optimizeTreasury();
+          });
+        }
+      });
+      
+      // Add user management buttons
+      const addUserBtn = document.querySelector('button[onclick*="Add New User"]');
+      if (addUserBtn) {
+        addUserBtn.addEventListener('click', function() {
+          showAddUserModal();
+        });
+      }
+      
+      // Add bulk operations functionality
+      const bulkOpsBtn = document.querySelector('button[onclick*="Bulk Operations"]');
+      if (bulkOpsBtn) {
+        bulkOpsBtn.addEventListener('click', function() {
+          showBulkOperationsModal();
+        });
+      }
+    }
+    
+    // Export Dashboard Data
+    function exportDashboardData() {
+      const data = {
+        timestamp: new Date().toISOString(),
+        section: currentSection,
+        metrics: dashboardData,
+        systemInfo: {
+          userAgent: navigator.userAgent,
+          platform: navigator.platform,
+          language: navigator.language
+        }
+      };
+      
+      // Create downloadable file
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `dashboard-export-${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      // Show success notification
+      showNotification('Dashboard exported successfully!', 'success');
+    }
+    
+    // Optimize Treasury
+    async function optimizeTreasury() {
+      const btn = event.target;
+      const originalText = btn.innerHTML;
+      
+      // Show loading state
+      btn.innerHTML = '<span class="loading">Optimizing...</span>';
+      btn.disabled = true;
+      
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Update data with optimization results
+        const optimizationResult = await dataService.generateRealisticData();
+        dashboardData.treasuryReserves = optimizationResult.treasuryReserves;
+        dashboardData.settlementData = optimizationResult.settlementData;
+        
+        // Update UI
+        updateTreasuryData(dashboardData.treasuryReserves);
+        updateSettlementData(dashboardData.settlementData);
+        
+        showNotification('Treasury optimization completed successfully!', 'success');
+        
+      } catch (error) {
+        showNotification('Optimization failed. Please try again.', 'error');
+      } finally {
+        // Restore button
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+    
+    // Update Security System
+    function updateSecuritySystem(isActive) {
+      const status = isActive ? 'activated' : 'deactivated';
+      console.log(`Security system ${status}`);
+      
+      // Update security metrics
+      if (isActive) {
+        // Simulate enhanced security metrics
+        setTimeout(() => {
+          updateSecurityMetrics(true);
+          showNotification('Security system activated successfully!', 'success');
+        }, 1000);
+      } else {
+        updateSecurityMetrics(false);
+        showNotification('Security system deactivated', 'warning');
+      }
+    }
+    
+    function updateSecurityMetrics(enhanced) {
+      const threatElements = document.querySelectorAll('.card span');
+      threatElements.forEach(el => {
+        const parent = el.parentElement;
+        if (parent && parent.textContent.includes('Active Threats')) {
+          el.textContent = enhanced ? '0' : '3';
+          el.style.color = enhanced ? 'var(--success)' : 'var(--coral)';
+        }
+        if (parent && parent.textContent.includes('Blocked Today')) {
+          el.textContent = enhanced ? '500+' : '247';
+        }
+      });
+    }
+    
+    // Show Add User Modal
+    function showAddUserModal() {
+      const modal = createModal('Add New User', `
+        <form id="addUserForm">
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <input type="text" placeholder="Full Name" class="form-input" required>
+            <input type="email" placeholder="Email Address" class="form-input" required>
+            <select class="form-input">
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+              <option value="superadmin">Super Admin</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Add User</button>
+          </div>
+        </form>
+      `);
+      
+      document.body.appendChild(modal);
+      
+      // Handle form submission
+      document.getElementById('addUserForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        console.log('New user data:', Object.fromEntries(formData));
+        modal.remove();
+        showNotification('User added successfully!', 'success');
+      });
+    }
+    
+    // Show Bulk Operations Modal
+    function showBulkOperationsModal() {
+      const modal = createModal('Bulk Operations', `
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <button class="btn btn-secondary" onclick="bulkExport()">Export All Users</button>
+          <button class="btn btn-secondary" onclick="bulkImport()">Import Users</button>
+          <button class="btn btn-secondary" onclick="bulkUpdate()">Update Permissions</button>
+          <button class="btn btn-ghost" onclick="this.closest('.modal').remove()">Cancel</button>
+        </div>
+      `);
+      
+      document.body.appendChild(modal);
+    }
+    
+    // Create Modal
+    function createModal(title, content) {
+      const modal = document.createElement('div');
+      modal.className = 'modal';
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      `;
+      
+      modal.innerHTML = `
+        <div style="background: var(--primary); padding: 2rem; border-radius: 16px; max-width: 500px; width: 90%;">
+          <h3 style="margin-bottom: 1.5rem; color: var(--white);">${title}</h3>
+          ${content}
+        </div>
+      `;
+      
+      // Close on background click
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
+      
+      return modal;
+    }
+    
+    // Show Notification
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.style.cssText = `
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        color: var(--white);
+        font-weight: 500;
+        z-index: 1001;
+        animation: slideInRight 0.3s ease-out;
+      `;
+      
+      const colors = {
+        success: 'var(--success)',
+        error: 'var(--coral)',
+        warning: 'var(--warning)',
+        info: 'var(--info)'
+      };
+      
+      notification.style.background = colors[type] || colors.info;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      // Auto remove after 3 seconds
+      setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+    
+    // Initialize WebSocket Connection (simulated)
+    function initializeWebSocketConnection() {
+      // Simulate WebSocket connection for real-time updates
+      console.log('WebSocket connection initialized');
+      
+      // Simulate incoming real-time events
+      setInterval(() => {
+        if (Math.random() < 0.1) { // 10% chance of event
+          const events = [
+            'New user registered',
+            'Large transaction processed',
+            'Security alert triggered',
+            'System backup completed',
+            'API rate limit reached'
+          ];
+          
+          const event = events[Math.floor(Math.random() * events.length)];
+          console.log('Real-time event:', event);
+          
+          // Update dashboard based on event
+          handleRealtimeEvent(event);
+        }
+      }, 10000);
+    }
+    
+    // Handle Real-time Events
+    function handleRealtimeEvent(event) {
+      switch(event) {
+        case 'New user registered':
+          dashboardData.activeUsers += 1;
+          updateStatCard('users', dataService.formatNumber(dashboardData.activeUsers));
+          showNotification('New user registered!', 'success');
+          break;
+        case 'Large transaction processed':
+          dashboardData.dailyVolume += Math.floor(Math.random() * 1000000);
+          updateStatCard('volume', dataService.formatCurrency(dashboardData.dailyVolume));
+          break;
+        case 'Security alert triggered':
+          dashboardData.pendingAlerts += 1;
+          updateStatCard('alerts', dataService.formatNumber(dashboardData.pendingAlerts));
+          showNotification('Security alert triggered!', 'warning');
+          break;
+        default:
+          console.log('Event handled:', event);
+      }
+    }
+    
+    // Add CSS for animations
+    const additionalStyles = document.createElement('style');
+    additionalStyles.textContent = `
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes slideOutRight {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+      
+      .modal {
+        backdrop-filter: blur(10px);
+      }
+      
+      .loading {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid transparent;
+        border-top: 2px solid currentColor;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(additionalStyles);
+    
+    // Show main dashboard
+    function showMainDashboard() {
+      // Hide all sections
+      document.querySelectorAll('section').forEach(section => {
+        section.style.display = 'none';
+      });
+      
+      // Show main dashboard content
+      const mainContent = document.getElementById('main-dashboard-content');
+      if (mainContent) {
+        mainContent.style.display = 'block';
+      }
+      
+      // Show all other main dashboard elements (stats, grid, etc.)
+      document.querySelectorAll('main > div').forEach(el => {
+        if (el.id !== 'main-dashboard-content' && !el.id.startsWith('command-center')) {
+          el.style.display = 'block';
+        }
+      });
+      
+      currentSection = 'main';
+      updateNavigationActive('command-center');
+      updatePageTitle('command-center');
+    }
+    
+    // Add card interactions
+    function addCardInteractions() {
+      // Add hover effects to cards
+      document.querySelectorAll('.admin-card, .card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-2px)';
+          this.style.boxShadow = '0 8px 25px rgba(0, 212, 170, 0.15)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+          this.style.boxShadow = 'none';
+        });
+      });
+      
+      // Add click handlers to buttons
+      document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+          if (!this.classList.contains('disabled')) {
+            // Add ripple effect
+            const ripple = document.createElement('span');
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+            ripple.style.animation = 'ripple 0.6s ease-out';
+            
+            const rect = this.getBoundingClientRect();
+            ripple.style.left = (e.clientX - rect.left - 10) + 'px';
+            ripple.style.top = (e.clientY - rect.top - 10) + 'px';
+            
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+          }
+        });
+      });
+    }
+    
+    // Real-time updates
+    function startRealTimeUpdates() {
+      // Update stats every 5 seconds
+      setInterval(() => {
+        updateRealTimeStats();
+      }, 5000);
+      
+      // Update time every second
+      setInterval(() => {
+        updateCurrentTime();
+      }, 1000);
+    }
+    
+    // Update real-time stats
+    function updateRealTimeStats() {
+      // Update user count
+      const userCount = document.querySelector('.admin-stat-value');
+      if (userCount && userCount.textContent.includes('50,234')) {
+        const newCount = 50234 + Math.floor(Math.random() * 10) - 5;
+        userCount.textContent = newCount.toLocaleString();
+      }
+      
+      // Update daily volume
+      const volumeElements = document.querySelectorAll('.admin-stat-value');
+      volumeElements.forEach(el => {
+        if (el.textContent.includes('$847M')) {
+          const newVolume = 847 + Math.floor(Math.random() * 20) - 10;
+          el.textContent = '$' + newVolume + 'M';
+        }
+      });
+      
+      // Update AI efficiency
+      const efficiencyElements = document.querySelectorAll('.admin-stat-value');
+      efficiencyElements.forEach(el => {
+        if (el.textContent.includes('89%')) {
+          const newEfficiency = 89 + Math.floor(Math.random() * 3) - 1;
+          el.textContent = newEfficiency + '%';
+        }
+      });
+    }
+    
+    // Update current time
+    function updateCurrentTime() {
+      const dateElement = document.querySelector('.dashboard-date');
+      if (dateElement) {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateElement.textContent = 'Global Operations Dashboard \u2022 ' + now.toLocaleDateString('en-US', options);
+      }
+    }
+    
+    // Add CSS animation for ripple effect
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Alt + 1-6 for navigation
+      if (e.altKey) {
+        switch(e.key) {
+          case '1':
+            showMainDashboard();
+            break;
+          case '2':
+            showAdminSection('treasury');
+            break;
+          case '3':
+            showAdminSection('ai-governance');
+            break;
+          case '4':
+            showAdminSection('security');
+            break;
+          case '5':
+            showAdminSection('compliance');
+            break;
+          case '6':
+            showAdminSection('users');
+            break;
+        }
+      }
+    });
+    
+    // Add search functionality
+    function addSearchFunctionality() {
+      const searchInput = document.createElement('input');
+      searchInput.type = 'text';
+      searchInput.placeholder = 'Search dashboard...';
+      searchInput.className = 'form-input';
+      searchInput.style.marginLeft = '1rem';
+      searchInput.style.width = '200px';
+      
+      const navbarActions = document.querySelector('.navbar-actions');
+      if (navbarActions) {
+        navbarActions.insertBefore(searchInput, navbarActions.firstChild);
+        
+        searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          filterDashboardContent(searchTerm);
+        });
+      }
+    }
+    
+    // Filter dashboard content
+    function filterDashboardContent(searchTerm) {
+      if (!searchTerm) {
+        // Show all content
+        document.querySelectorAll('.admin-card, .card').forEach(card => {
+          card.style.display = 'block';
+        });
+        return;
+      }
+      
+      // Filter cards based on search term
+      document.querySelectorAll('.admin-card, .card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+      });
+    }
+    
+    // Initialize search
+    addSearchFunctionality();
+    
+    // Export functionality
+    function exportDashboardData() {
+      const data = {
+        timestamp: new Date().toISOString(),
+        section: currentSection,
+        stats: collectDashboardStats()
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `dashboard-export-${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    // Collect dashboard stats
+    function collectDashboardStats() {
+      const stats = {};
+      document.querySelectorAll('.admin-stat-value').forEach((el, index) => {
+        stats[`stat_${index}`] = el.textContent;
+      });
+      return stats;
+    }
+    
+    // Add export button functionality
+    const exportBtn = document.querySelector('.btn-secondary');
+    if (exportBtn && exportBtn.textContent.includes('Export Report')) {
+      exportBtn.addEventListener('click', exportDashboardData);
+    }
+  </script>
+  
+  <!-- Chat Widget -->
+  <div class="chat-widget" id="chatWidget">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <div style="width: 32px; height: 32px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 600;">A</div>
+          <div>
+            <div style="font-weight: 600; font-size: 0.875rem;">User Support</div>
+            <div style="font-size: 0.75rem; color: var(--gray);">2 users online</div>
+          </div>
+        </div>
+      </div>
+      <button class="chat-toggle" id="chatToggle">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="chat-body" id="chatBody">
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-message user-message">
+          <div class="message-header">
+            <span class="message-sender">User 1</span>
+            <span class="message-time">2 min ago</span>
+          </div>
+          <div class="message-content">
+            Hi, I need help with my international transfer. It's been pending for 24 hours.
+          </div>
+        </div>
+        <div class="chat-message user-message">
+          <div class="message-header">
+            <span class="message-sender">User 2</span>
+            <span class="message-time">5 min ago</span>
+          </div>
+          <div class="message-content">
+            Can you help me set up automatic currency conversion?
+          </div>
+        </div>
+      </div>
+      
+      <div class="chat-input-container">
+        <div class="chat-input-wrapper">
+          <input type="text" class="chat-input" id="chatInput" placeholder="Type your response..." maxlength="500">
+          <button class="chat-send-btn" id="chatSendBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13"></polygon>
+            </svg>
+          </button>
+        </div>
+        <div class="chat-typing-indicator" id="typingIndicator" style="display: none;">
+          <span>User is typing...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
